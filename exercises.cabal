@@ -52,6 +52,7 @@ test-suite exercises-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      ClientSpec
       TimeMachineStoreSpec
       Paths_exercises
   hs-source-dirs:

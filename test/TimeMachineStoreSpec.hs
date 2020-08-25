@@ -4,23 +4,16 @@ import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
 import TimeMachineStore
-import Client
 
 spec :: Spec
 spec = do
 
-    it "zero histogram when input is empty" $
-      let actual = genderHistogram []
-      in actual `shouldBe` GenderHistogram 0 0
+    it "when input is empty" $
+      yearDiscount [] `shouldBe` []
 
-    it "zero histogram when input has no individuals" $
-      let actual = genderHistogram [ GovOrg "Generalitat catalana",
-                                     Company "ACME" 44864646 (Person "Fran" "Gonzalez" Male) "Boss" ]
-      in actual `shouldBe` GenderHistogram 0 0
+    it "when there are time machines" $
+      let actual = yearDiscount [ TimeMachine (Manufacturer "ACME") (Model 5) "OClock" Past 1500.0,
+                                  TimeMachine (Manufacturer "ACME") (Model 5) "OClock" Past 1500.0 ]
+      in actual `shouldBe` [ TimeMachine (Manufacturer "ACME") (Model 5) "OClock" Past 750.0,
+                             TimeMachine (Manufacturer "ACME") (Model 5) "OClock" Past 750.0 ]
 
-    it "generic histogram when mixed clients" $
-      let actual = genderHistogram [ Individual (Person "Fran" "Gonzalez" Male) True,
-                                     Individual (Person "Alicia" "Gonzalez" Female) True,
-                                     Individual (Person "Luis" "Gil" Unknown) True,
-                                     GovOrg "Generalitat catalana" ]
-      in actual `shouldBe` GenderHistogram 1 1
