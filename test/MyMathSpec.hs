@@ -1,4 +1,4 @@
-module MathSpec where
+module MyMathSpec where
 
 import Test.Hspec
 import Test.QuickCheck
