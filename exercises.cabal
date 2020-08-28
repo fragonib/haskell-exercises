@@ -27,7 +27,9 @@ library
   exposed-modules:
       Client
       Lib
+      MyMath
       TimeMachineStore
+      TimeMachineStoreRecords
   other-modules:
       Paths_exercises
   hs-source-dirs:
@@ -53,6 +55,8 @@ test-suite exercises-test
   main-is: Spec.hs
   other-modules:
       ClientSpec
+      MathSpec
+      TimeMachineStoreRecordsSpec
       TimeMachineStoreSpec
       Paths_exercises
   hs-source-dirs:

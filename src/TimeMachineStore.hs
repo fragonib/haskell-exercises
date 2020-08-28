@@ -20,3 +20,4 @@ yearDiscount (machine:machines) =
   case machine of
     TimeMachine manufacturer model name timeTravel price -> 
       TimeMachine manufacturer model name timeTravel (price*0.5) : yearDiscount machines
+    

@@ -8,7 +8,7 @@ import Client
 spec :: Spec
 spec = do
 
-    it "when no clients then zero gender histogram " $
+    it "when no clients then zero gender histogram" $
       let actual = genderHistogram []
       in actual `shouldBe` GenderHistogram 0 0
 
@@ -21,5 +21,6 @@ spec = do
       let actual = genderHistogram [ Individual (Person "Fran" "Gonzalez" Male) True,
                                      Individual (Person "Alicia" "Gonzalez" Female) True,
                                      Individual (Person "Luis" "Gil" Unknown) True,
+                                     Company "ACME" 44864646 (Person "Fran" "Gonzalez" Male) "Boss",
                                      GovOrg "Generalitat catalana" ]
       in actual `shouldBe` GenderHistogram 1 1
