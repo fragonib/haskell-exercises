@@ -10,7 +10,7 @@ filterANumber :: (Num a, Eq a) => a -> [a] -> [a]
 filterANumber number = filter (\item -> item == number)
 
 filterNot :: (a -> Bool) -> [a] -> [a]
-filterNot f = filter (not . f)
+filterNot f = filter (\item -> not (f item))
 
 filterGovOrgs :: [Client] -> [Client]
 filterGovOrgs = filter isGovOrg
