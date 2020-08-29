@@ -3,13 +3,13 @@ module Client where
 data Client = GovOrg     String
             | Company    String Integer Person String
             | Individual Person Bool
-            deriving Show
+            deriving (Show, Eq)
 
 data Person = Person String String Gender
-            deriving Show
+            deriving (Show, Eq)
 
 data Gender = Male | Female | Unknown
-            deriving Show
+            deriving (Show, Eq)
             
 data GenderHistogram = GenderHistogram Int Int 
             deriving (Show, Eq)

@@ -26,6 +26,7 @@ source-repository head
 library
   exposed-modules:
       Client
+      Functions
       Lib
       MyMath
       TimeMachineStore
@@ -55,7 +56,8 @@ test-suite exercises-test
   main-is: Spec.hs
   other-modules:
       ClientSpec
-      MathSpec
+      FunctionsSpec
+      MyMathSpec
       TimeMachineStoreRecordsSpec
       TimeMachineStoreSpec
       Paths_exercises
