@@ -1,4 +1,4 @@
-module Client where
+module Chapter2.Client where
 
 data Client = GovOrg     String
             | Company    String Integer Person String

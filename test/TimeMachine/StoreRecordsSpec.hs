@@ -1,9 +1,9 @@
-module TimeMachineStoreRecordsSpec (spec) where
+module TimeMachine.StoreRecordsSpec (spec) where
 
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
-import TimeMachineStoreRecords
+import TimeMachine.StoreRecords
 
 spec :: Spec
 spec = do

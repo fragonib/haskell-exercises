@@ -1,9 +1,9 @@
-module ClientSpec (spec) where
+module Chapter2.ClientSpec (spec) where
 
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
-import Client
+import Chapter2.Client
 
 spec :: Spec
 spec = do
@@ -12,7 +12,7 @@ spec = do
       let actual = genderHistogram []
       in actual `shouldBe` GenderHistogram 0 0
 
-    it "when client hass no individuals then zero gender histogram" $
+    it "when client has no individuals then zero gender histogram" $
       let actual = genderHistogram [ GovOrg "Generalitat catalana",
                                      Company "ACME" 44864646 (Person "Fran" "Gonzalez" Male) "Boss" ]
       in actual `shouldBe` GenderHistogram 0 0

@@ -1,8 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
-
-module TimeMachineStoreRecords where
-
-import Client
+module TimeMachine.StoreRecords where
 
 data TimeMachine = TimeMachine
   { manufacturer :: String,

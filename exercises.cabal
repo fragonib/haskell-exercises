@@ -25,12 +25,13 @@ source-repository head
 
 library
   exposed-modules:
-      Client
-      Functions
+      Chapter2.Client
+      Chapter2.MyMath
+      Chapter3.HighOrderFunctions
+      Chapter3.ParametricTypes
       Lib
-      MyMath
-      TimeMachineStore
-      TimeMachineStoreRecords
+      TimeMachine.Store
+      TimeMachine.StoreRecords
   other-modules:
       Paths_exercises
   hs-source-dirs:
@@ -55,11 +56,11 @@ test-suite exercises-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      ClientSpec
-      FunctionsSpec
-      MyMathSpec
-      TimeMachineStoreRecordsSpec
-      TimeMachineStoreSpec
+      Chapter2.ClientSpec
+      Chapter2.MyMathSpec
+      Chapter3.HighOrderFunctionsSpec
+      TimeMachine.StoreRecordsSpec
+      TimeMachine.StoreSpec
       Paths_exercises
   hs-source-dirs:
       test
