@@ -18,7 +18,7 @@ spec = do
     it "filterNot" $
       SUT.filterNot (> 2) [1, 2, 3, 1, 2] `shouldBe` [1, 2, 1, 2]
 
-    it "when mixed clients then generic gender histogram" $
+    it "filterGovOrgs" $
       let actual = [ Individual (Person "Fran" "Gonzalez" Male) True,
                      Company "ACME" 44864646 (Person "Fran" "Gonzalez" Male) "Boss",
                      GovOrg "Generalitat catalana" ]

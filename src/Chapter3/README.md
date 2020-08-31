@@ -1,9 +1,9 @@
 * Parametric Polymorphism
- - In Functions
- - In ADT
+  - In Functions
+  - In ADT
 * Functions As Parameters
 * Higher-Order Functions
- - $ Operator
+  - $ Apply function operator
 * Anonymous Functions
 * Partial Application of a Function
 * Modules
