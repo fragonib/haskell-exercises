@@ -11,22 +11,22 @@ myFilter predicate (item:items) =
   then item : myFilter predicate items
   else myFilter predicate items
 
+myMap :: (a -> b) -> [a] -> [b]
 myMap _ [] = []
 myMap f (x:xs) = f x : myMap f xs
 
-
 filterOnes :: (Num a, Eq a) => [a] -> [a]
-filterOnes = filter (\item -> item == 1)
+filterOnes = filter (== 1)
 
 filterANumber :: (Num a, Eq a) => a -> [a] -> [a]
-filterANumber number = filter (\item -> item == number)
+filterANumber = filter . (==)
 
 filterNot :: (a -> Bool) -> [a] -> [a]
-filterNot f = filter (\item -> not (f item))
+filterNot = filter . (not .)
+-- f(g(a))     f $ g a
 
 filterGovOrgs :: [C.Client] -> [C.Client]
 filterGovOrgs = filter isGovOrg
-
-isGovOrg = \case
-  C.GovOrg _ -> True
-  _ -> False
+  where isGovOrg = \case
+          C.GovOrg _ -> True
+          _ -> False
