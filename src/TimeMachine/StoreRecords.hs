@@ -17,4 +17,4 @@ yearDiscount :: [TimeMachine] -> [TimeMachine]
 yearDiscount [] = []
 yearDiscount (machine : machines) =
   case machine of
-    tm@TimeMachine { .. }  -> tm { price = price * 0.5 } : yearDiscount machines
+    tm@TimeMachine { .. } -> tm { price = price * 0.5 } : yearDiscount machines

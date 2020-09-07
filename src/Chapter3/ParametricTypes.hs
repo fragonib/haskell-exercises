@@ -6,7 +6,7 @@ swapTriple (x,y,z) = (y,z,x)
 duplicate :: a -> (a, a)
 duplicate x = (x,x)
 
-nothing :: a -> Maybe a -- Preguntar (p -> Maybe a)
+nothing :: p -> Maybe a
 nothing _ = Nothing
 
 index :: Num i => [a] -> [(i, a)]
