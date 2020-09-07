@@ -27,6 +27,7 @@ library
   exposed-modules:
       Chapter2.Client
       Chapter2.MyMath
+      Chapter3.Folds
       Chapter3.HighOrderFunctions
       Chapter3.ParametricTypes
       Lib
@@ -58,6 +59,7 @@ test-suite exercises-test
   other-modules:
       Chapter2.ClientSpec
       Chapter2.MyMathSpec
+      Chapter3.FoldsSpec
       Chapter3.HighOrderFunctionsSpec
       TimeMachine.StoreRecordsSpec
       TimeMachine.StoreSpec

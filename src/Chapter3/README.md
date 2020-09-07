@@ -1,3 +1,4 @@
+# Part 1
 * Parametric Polymorphism
   - In Functions
   - In ADT
@@ -8,3 +9,5 @@
 * Partial Application of a Function
 * Modules
 * Smart Constructors and Views
+
+# Part 2
