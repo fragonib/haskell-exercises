@@ -1,6 +1,6 @@
 module Chapter3.Folds where
 
-import qualified Chapter2.Client as C
+import qualified Chapter3.ClientRecords as C
 
 
 -- Fold 
@@ -41,7 +41,7 @@ minimumClientFold = foldr1 minClient
 allFold :: [Bool] -> Bool
 allFold = foldr (&&) True
 
-minimumBy :: (Ord a) => (a -> a) -> [a] -> a
+minimumBy :: (Ord b) => (a -> b) -> [a] -> a
 minimumBy by = foldr1 (\x y -> if by x < by y then x else y)
 
 
@@ -56,3 +56,5 @@ clientName :: C.Client -> [Char]
 clientName (C.Individual (C.Person name _ _) _) = name
 clientName (C.Company name _ _ _) = name
 clientName (C.GovOrg name) = name
+
+

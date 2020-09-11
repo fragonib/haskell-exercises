@@ -4,7 +4,7 @@ import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
 
-import Chapter2.Client
+import Chapter3.ClientRecords
 import qualified Chapter3.Folds as SUT
 
 spec :: Spec

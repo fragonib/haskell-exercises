@@ -27,9 +27,12 @@ library
   exposed-modules:
       Chapter2.Client
       Chapter2.MyMath
+      Chapter3.ClientRecords
+      Chapter3.Comprehension
       Chapter3.Folds
       Chapter3.HighOrderFunctions
       Chapter3.ParametricTypes
+      Chapter3.Predicates
       Lib
       TimeMachine.Store
       TimeMachine.StoreRecords
@@ -61,6 +64,7 @@ test-suite exercises-test
       Chapter2.MyMathSpec
       Chapter3.FoldsSpec
       Chapter3.HighOrderFunctionsSpec
+      Chapter3.PredicatesSpec
       TimeMachine.StoreRecordsSpec
       TimeMachine.StoreSpec
       Paths_exercises
