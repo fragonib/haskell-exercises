@@ -12,8 +12,8 @@ spec = do
 
   describe "fizzbuzz" $ do
 
-    it "several lists are fizzbuzz rules compliant" $ property $ 
-      fizzBuzzProperty $ SUT.topFizzBuzz 100
+    it "several lists fizzbuzz are rule compliant" $ 
+      property fizzBuzzCompliant
 
     it "top 100 list is equal to top 100 golden master" $
       SUT.topFizzBuzz 100 `shouldBe` goldenMaster
@@ -29,9 +29,9 @@ spec = do
                             "91","92","Fizz","94","Buzz","Fizz","97","98","Fizz","Buzz" ]
 
 
-fizzBuzzProperty :: [[Char]] -> Property
-fizzBuzzProperty xs = forAll (elements $ zip [1..] xs) validFizzBuzzItem
-                      where validFizzBuzzItem (index, text) = 
+fizzBuzzCompliant :: Positive Int -> Property
+fizzBuzzCompliant n = forAll (elements $ zip [1..] (SUT.topFizzBuzz (getPositive n))) validFizzBuzzItem
+                      where validFizzBuzzItem (index, text) =
                               case text of
                                 "Fizz" -> index `mod` 3 == 0
                                 "Buzz" -> index `mod` 5 == 0
