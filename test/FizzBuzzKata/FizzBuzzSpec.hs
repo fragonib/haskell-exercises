@@ -13,10 +13,10 @@ spec = do
   describe "fizzbuzz" $ do
 
     it "several lists fizzbuzz are rule compliant" $ 
-      property fizzBuzzCompliant
+      property fizzBuzzProperty
 
     it "top 100 list is equal to top 100 golden master" $
-      SUT.topFizzBuzz 100 `shouldBe` goldenMaster
+      SUT.topFizzBuzzAsUnfold 100 `shouldBe` goldenMaster
       where goldenMaster = ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz",
                             "11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz",
                             "Fizz","22","23","Fizz","Buzz","26","Fizz","28","29","FizzBuzz",
@@ -29,8 +29,8 @@ spec = do
                             "91","92","Fizz","94","Buzz","Fizz","97","98","Fizz","Buzz" ]
 
 
-fizzBuzzCompliant :: Positive Int -> Property
-fizzBuzzCompliant n = forAll (elements $ zip [1..] (SUT.topFizzBuzz (getPositive n))) validFizzBuzzItem
+fizzBuzzProperty :: Positive Int -> Property
+fizzBuzzProperty n = forAll (elements $ zip [1..] (SUT.topFizzBuzzAsUnfold (getPositive n))) validFizzBuzzItem
                       where validFizzBuzzItem (index, text) =
                               case text of
                                 "Fizz" -> index `mod` 3 == 0
