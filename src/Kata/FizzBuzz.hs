@@ -1,4 +1,4 @@
-module FizzBuzzKata.FizzBuzz where
+module Kata.FizzBuzz where
 
 import Data.List
 

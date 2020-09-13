@@ -1,10 +1,10 @@
-module FizzBuzzKata.FizzBuzzSpec (spec) where
+module Kata.FizzBuzzSpec (spec) where
 
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
 
-import qualified FizzBuzzKata.FizzBuzz as SUT
+import qualified Kata.FizzBuzz as SUT
 
 
 spec :: Spec
