@@ -34,7 +34,7 @@ library
       Chapter3.Origami
       Chapter3.ParametricTypes
       Chapter3.Predicates
-      FizzBuzz.FizzBuzzKata
+      FizzBuzzKata.FizzBuzz
       Lib
       TimeMachine.Store
       TimeMachine.StoreRecords
@@ -67,7 +67,7 @@ test-suite exercises-test
       Chapter3.FoldsSpec
       Chapter3.HighOrderFunctionsSpec
       Chapter3.PredicatesSpec
-      FizzBuzz.FizzBuzzKataSpec
+      FizzBuzzKata.FizzBuzzSpec
       TimeMachine.StoreRecordsSpec
       TimeMachine.StoreSpec
       Paths_exercises
