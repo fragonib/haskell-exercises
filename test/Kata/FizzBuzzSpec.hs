@@ -3,7 +3,6 @@ module Kata.FizzBuzzSpec (spec) where
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
-
 import qualified Kata.FizzBuzz as SUT
 
 
@@ -27,11 +26,10 @@ spec = do
                             "71","Fizz","73","74","FizzBuzz","76","77","Fizz","79","Buzz",
                             "Fizz","82","83","Fizz","Buzz","86","Fizz","88","89","FizzBuzz",
                             "91","92","Fizz","94","Buzz","Fizz","97","98","Fizz","Buzz" ]
-
-
+  
 fizzBuzzProperty :: Positive Int -> Property
 fizzBuzzProperty n = forAll (elements $ zip [1..] (SUT.topFizzBuzzAsUnfold (getPositive n))) validFizzBuzzItem
-                      where validFizzBuzzItem (index, text) =
+                     where validFizzBuzzItem (index, text) =
                               case text of
                                 "Fizz" -> index `mod` 3 == 0
                                 "Buzz" -> index `mod` 5 == 0
