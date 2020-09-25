@@ -35,6 +35,7 @@ library
       Chapter3.ParametricTypes
       Chapter3.Predicates
       Kata.FizzBuzz
+      Kata.Knights
       Kata.Revert
       Lib
       TimeMachine.Store
@@ -69,6 +70,7 @@ test-suite exercises-test
       Chapter3.HighOrderFunctionsSpec
       Chapter3.PredicatesSpec
       Kata.FizzBuzzSpec
+      Kata.KnightsSpec
       TimeMachine.StoreRecordsSpec
       TimeMachine.StoreSpec
       Paths_exercises
