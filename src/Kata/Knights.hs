@@ -56,5 +56,19 @@ isInsideBoard (a, b)
   | otherwise = True
 
 
+boolToValidation :: Bool -> String
+boolToValidation b = if b then "valid" else "invalid"
+
+isNineKnightBoardIO :: [Char] -> [Char]
+isNineKnightBoardIO = boolToValidation . isNineKnightBoard . symbolsToBoard
+
 main :: IO()
-main = print $ isNineKnightBoard []
+main = do
+    l1 <- getLine
+    l2 <- getLine
+    l3 <- getLine
+    l4 <- getLine
+    l5 <- getLine
+    print $ isNineKnightBoardIO (l1 ++ l2 ++ l3 ++ l4 ++ l5)
+
+    -- foldr (\i text -> text ++ readLn) [] [1..boardSize]
