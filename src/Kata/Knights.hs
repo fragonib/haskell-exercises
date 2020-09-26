@@ -59,8 +59,8 @@ isInsideBoard (a, b)
 boolToValidation :: Bool -> [Char]
 boolToValidation b = if b then "valid" else "invalid"
 
-isNineKnightBoardIO :: [Char] -> [Char]
-isNineKnightBoardIO = boolToValidation . isNineKnightBoard . symbolsToBoard
+isNineKnightBoardCLI :: [Char] -> [Char]
+isNineKnightBoardCLI = boolToValidation . isNineKnightBoard . symbolsToBoard
 
 main :: IO()
 main = do
@@ -70,4 +70,4 @@ main = do
     l4 <- getLine
     l5 <- getLine
     putStrLn $ let input = (l1 ++ l2 ++ l3 ++ l4 ++ l5)
-               in isNineKnightBoardIO input
+               in isNineKnightBoardCLI input
