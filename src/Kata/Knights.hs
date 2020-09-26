@@ -71,5 +71,3 @@ main = do
     l5 <- getLine
     putStrLn $ let input = (l1 ++ l2 ++ l3 ++ l4 ++ l5)
                in isNineKnightBoardIO input
-
-    -- foldr (\i text -> text ++ readLn) [] [1..boardSize]
