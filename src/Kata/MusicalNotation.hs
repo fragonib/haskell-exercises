@@ -5,10 +5,29 @@ import Data.List (intercalate)
 
 
 data Note =
-  Note { symbol :: Char , repetition :: Int }
+  Note { symbol :: Char, repetition :: Int }
   deriving (Show, Eq)
 
-noteSymbols = ['G', 'F', 'E', 'D', 'C', 'B', 'A', 'g', 'f', 'e', 'd', 'c', 'b', 'a']
+data NoteLine =
+  NoteLine { sign :: Char, separator :: Char }
+  deriving (Show, Eq)
+
+noteSymbols = [
+ NoteLine 'G' ' ',
+ NoteLine 'F' '-',
+ NoteLine 'E' ' ',
+ NoteLine 'D' '-',
+ NoteLine 'C' ' ',
+ NoteLine 'B' '-',
+ NoteLine 'A' ' ',
+ NoteLine 'g' '-',
+ NoteLine 'f' ' ',
+ NoteLine 'e' '-',
+ NoteLine 'd' ' ',
+ NoteLine 'c' ' ',
+ NoteLine 'b' ' ',
+ NoteLine 'a' '-'
+ ]
 
 musicalNotationCLI :: [Char] -> [Char]
 musicalNotationCLI notesLiteral = intercalate "\n" $
@@ -25,24 +44,26 @@ symbolToNote :: [Char] -> Note
 symbolToNote (symbol:repetition)
  | null repetition = Note symbol 1
  | otherwise = Note symbol (digitToInt $ head repetition)
- 
+
 -- Generate output
 
-musicLine :: Char -> [Note] -> [Char]
-musicLine noteSymbol noteSequence = 
-  musicLinePrefix noteSymbol ++ 
-    musicLineContent noteSymbol noteSequence
+musicLine :: NoteLine -> [Note] -> [Char]
+musicLine noteLine noteSequence =
+  musicLinePrefix noteLine ++
+  musicLineContent noteLine noteSequence
 
-musicLinePrefix :: Char -> [Char]
-musicLinePrefix noteSymbol = noteSymbol : ": "
+musicLinePrefix :: NoteLine -> [Char]
+musicLinePrefix noteLine = sign noteLine : ": "
 
-musicLineContent :: Char -> [Note] -> [Char]
-musicLineContent symbol notes = intercalate "-" $ map (noteSymbolToNotePart symbol) notes
+musicLineContent :: NoteLine -> [Note] -> [Char]
+musicLineContent noteLine noteSequence = intercalate [separator noteLine] $
+  map (noteSymbolToNotePart noteLine) noteSequence
 
-noteSymbolToNotePart :: Char -> Note -> [Char]
-noteSymbolToNotePart noteSymbol note = case note of
+noteSymbolToNotePart :: NoteLine -> Note -> [Char]
+noteSymbolToNotePart noteLine singleNote = case singleNote of
    Note { symbol = s, repetition = r } -> replicate r pitch
-                                          where pitch = if noteSymbol == s then '*' else '-'
+                                          where pitch = if sign noteLine == s then '*' 
+                                                        else separator noteLine
 
 
 main :: IO()
