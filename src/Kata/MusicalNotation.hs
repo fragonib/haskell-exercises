@@ -8,16 +8,16 @@ data Note =
   deriving (Show, Eq)
 
 musicalNotationCLI :: [Char] -> [Note]
-musicalNotationCLI l = foldr symbolToNote [] $ words l
+musicalNotationCLI l = foldr ((:) . symbolToNote) [] $ words l
 
-symbolToNote :: [Char] -> [Note] -> [Note]
-symbolToNote (symbol:repetition) notes
- | null repetition = SimpleNote symbol : notes
- | otherwise = RepeatedNote symbol (digitToInt $ head repetition) : notes
+symbolToNote :: [Char] -> Note
+symbolToNote (symbol:repetition)
+ | null repetition = SimpleNote symbol
+ | otherwise = RepeatedNote symbol (digitToInt $ head repetition)
 
 
 main :: IO()
 main = do
-    l1 <- getLine
-    l2 <- getLine
-    mapM_ print $ musicalNotationCLI $ l2
+    count <- getLine
+    notes <- getLine
+    mapM_ print $ musicalNotationCLI notes
