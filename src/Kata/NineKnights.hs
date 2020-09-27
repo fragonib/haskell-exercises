@@ -56,11 +56,11 @@ isInsideBoard (a, b)
   | otherwise = True
 
 
-boolToValidation :: Bool -> [Char]
-boolToValidation b = if b then "valid" else "invalid"
+validationToLiteral :: Bool -> [Char]
+validationToLiteral b = if b then "valid" else "invalid"
 
 isNineKnightBoardCLI :: [Char] -> [Char]
-isNineKnightBoardCLI = boolToValidation . isNineKnightBoard . symbolsToBoard
+isNineKnightBoardCLI = validationToLiteral . isNineKnightBoard . symbolsToBoard
 
 main :: IO()
 main = do

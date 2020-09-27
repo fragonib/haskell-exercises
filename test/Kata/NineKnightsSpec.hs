@@ -1,4 +1,4 @@
-module Kata.KnightsSpec (spec) where
+module Kata.NineKnightsSpec (spec) where
 
 import Test.Hspec
 import Test.QuickCheck
