@@ -3,7 +3,7 @@ module Kata.NineKnightsSpec (spec) where
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
-import qualified Kata.Knights as SUT
+import qualified Kata.NineKnights as SUT
 
 
 spec :: Spec

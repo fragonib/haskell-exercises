@@ -1,4 +1,4 @@
-module Kata.Knights where
+module Kata.NineKnights where
 
 import Data.List
 import Debug.Trace (trace)
