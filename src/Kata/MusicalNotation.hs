@@ -20,4 +20,4 @@ main :: IO()
 main = do
     l1 <- getLine
     l2 <- getLine
-    mapM_ print $ musicalNotationCLI $ trace "ads" l2
+    mapM_ print $ musicalNotationCLI $ l2
