@@ -62,7 +62,7 @@ musicLineContent noteLine noteSequence = intercalate [separator noteLine] $
 noteSymbolToNotePart :: NoteLine -> Note -> [Char]
 noteSymbolToNotePart noteLine singleNote = case singleNote of
    Note { symbol = s, repetition = r } -> replicate r pitch
-                                          where pitch = if sign noteLine == s then '*' 
+                                          where pitch = if sign noteLine == s then '*'
                                                         else separator noteLine
 
 
