@@ -3,21 +3,35 @@ module Kata.MusicalNotation where
 import Data.Char
 import Data.List (intercalate)
 
+
 data Note =
   Note { symbol :: Char , repetition :: Int }
   deriving (Show, Eq)
 
+noteSymbols = ['G', 'F', 'E', 'D', 'C', 'B', 'A', 'g', 'f', 'e', 'd', 'c', 'b', 'a']
 
-musicalNotationCLI :: [Char] -> [Note]
-musicalNotationCLI l = foldr ((:) . symbolToNote) [] $ words l
+musicalNotationCLI :: [Char] -> [Char]
+musicalNotationCLI notesLiteral = intercalate "\n" $
+  map (`musicLine` notesList) noteSymbols
+  where notesList = parseNotes notesLiteral
+
+
+-- Parsing input
+
+parseNotes :: [Char] -> [Note]
+parseNotes notesLiteral = foldr ((:) . symbolToNote) [] $ words notesLiteral
 
 symbolToNote :: [Char] -> Note
 symbolToNote (symbol:repetition)
  | null repetition = Note symbol 1
  | otherwise = Note symbol (digitToInt $ head repetition)
+ 
+-- Generate output
 
 musicLine :: Char -> [Note] -> [Char]
-musicLine noteSymbol noteSequence = musicLinePrefix noteSymbol ++ musicLineContent noteSymbol noteSequence
+musicLine noteSymbol noteSequence = 
+  musicLinePrefix noteSymbol ++ 
+    musicLineContent noteSymbol noteSequence
 
 musicLinePrefix :: Char -> [Char]
 musicLinePrefix noteSymbol = noteSymbol : ": "
@@ -35,4 +49,4 @@ main :: IO()
 main = do
     count <- getLine
     notes <- getLine
-    putStrLn $ musicLine 'C' $ musicalNotationCLI notes
+    putStrLn $ musicalNotationCLI notes
