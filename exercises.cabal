@@ -38,6 +38,7 @@ library
       Kata.MusicalNotation
       Kata.NineKnights
       Kata.Revert
+      Kata.Yoda
       Lib
       TimeMachine.Store
       TimeMachine.StoreRecords
@@ -73,6 +74,7 @@ test-suite exercises-test
       Kata.FizzBuzzSpec
       Kata.MusicalNotationSpec
       Kata.NineKnightsSpec
+      Kata.YodaSpec
       TimeMachine.StoreRecordsSpec
       TimeMachine.StoreSpec
       Paths_exercises
