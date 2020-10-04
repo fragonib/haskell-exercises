@@ -11,13 +11,13 @@ spec = do
 
   describe "Padding" $ do
 
-    it "zeroLeftPad" $ do
+    it "leftPadZero" $ do
       SUT.leftPadZero 5 [] `shouldBe` [0,0,0,0,0]
       SUT.leftPadZero 5 [1,2,3] `shouldBe` [0,0,1,2,3]
       SUT.leftPadZero 3 [1,2,3] `shouldBe` [1,2,3]
       SUT.leftPadZero 2 [1,2,3] `shouldBe` [1,2,3]
 
-    it "zeroLeftPad" $ do
+    it "leftTruncateZero" $ do
       SUT.leftTruncateZero [] `shouldBe` []
       SUT.leftTruncateZero [1,2,3] `shouldBe` [1,2,3]
       SUT.leftTruncateZero [0,2,3] `shouldBe` [2,3]
