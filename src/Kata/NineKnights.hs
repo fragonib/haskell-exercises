@@ -9,11 +9,17 @@ boardSize = 5
 type Knight = (Int, Int)
 type Board = [Knight]
 
+
+-- Utils
+
 or' :: (a -> Bool) -> (a -> Bool) -> a -> Bool
 or' f g a = f a || g a
 
 enumerate :: (Num a, Enum a) => [b] -> [(a, b)]
 enumerate = zip [0..]
+
+
+-- Validating input
 
 isValidSymbol :: Char -> Bool
 isValidSymbol = (== '.') `or'` (== 'k')
@@ -22,13 +28,23 @@ isValidBoardLiteral :: [Char] -> Bool
 isValidBoardLiteral board | length board /= (boardSize * boardSize) = False
 isValidBoardLiteral board = foldr ((&&) . isValidSymbol) True board
 
+
+-- Parsing input
+
 symbolsToBoard :: [Char] -> [Knight]
 symbolsToBoard = foldr symbolToKnight [] . enumerate
 
 symbolToKnight :: (Int, Char) -> [Knight] -> [Knight]
 symbolToKnight (index, symbol) knights = case symbol of
-  'k' -> index `divMod` boardSize : knights
+  'k' -> indexToPosition index : knights
   _ -> knights
+
+
+indexToPosition :: Int -> (Int, Int)
+indexToPosition index = index `divMod` boardSize
+
+
+-- API
 
 isNineKnightBoard :: Board -> Bool
 isNineKnightBoard knights
@@ -38,8 +54,11 @@ isNineKnightBoard knights
 isCaptureFreeBoard :: Board -> Bool
 isCaptureFreeBoard [] = True
 isCaptureFreeBoard [knight] = True
-isCaptureFreeBoard (first:others) = null (knightMovements first `intersect` others)
-                                    && isCaptureFreeBoard others
+isCaptureFreeBoard (knight:others) = isCapturingOtherKnights knight others &&
+                                     isCaptureFreeBoard others
+
+isCapturingOtherKnights :: Knight -> [Knight] -> Bool
+isCapturingOtherKnights knight others = null (knightMovements knight `intersect` others)
 
 knightMovements :: Knight -> [Knight]
 knightMovements knight@(x, y)
@@ -55,12 +74,12 @@ isInsideBoard (a, b)
   | b < 0 || b >= boardSize = False
   | otherwise = True
 
-
 validationToLiteral :: Bool -> [Char]
 validationToLiteral b = if b then "valid" else "invalid"
 
 isNineKnightBoardCLI :: [Char] -> [Char]
 isNineKnightBoardCLI = validationToLiteral . isNineKnightBoard . symbolsToBoard
+
 
 main :: IO()
 main = do
