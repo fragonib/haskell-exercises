@@ -31,8 +31,8 @@ data Solution =
 
 allSolutions :: [Solution]
 allSolutions = [
-  Solution { opSequence = [sym1,sym2,sym3], 
-             result = calculate [op1,op2,op3] } | 
+  Solution { opSequence = [sym1,sym2,sym3],
+             result = calculate [op1,op2,op3] } |
   (sym1, op1) <- taggedOpers4,
   (sym2, op2) <- taggedOpers4,
   (sym3, op3) <- taggedOpers4 ]
@@ -47,7 +47,7 @@ findSolution n = find (\solution -> result solution == n) allSolutions
 -- IO
 
 solutionLiteral :: Maybe Solution -> String
-solutionLiteral (Just Solution { opSequence, result }) = 
+solutionLiteral (Just Solution { opSequence, result }) =
   intercalate " = " [leftSide, rightSide]
   where leftSide = "4 " ++ unwords (map (: " 4") opSequence)
         rightSide = show result
