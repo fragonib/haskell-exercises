@@ -1,6 +1,7 @@
 {-# LANGUAGE NamedFieldPuns #-}
 module Kata.FourThought where
 
+1import qualified Data.Map as Map
 import Data.List
 
 
@@ -24,15 +25,10 @@ taggedOpers4 = zip opersTags opers4
 
 -- Solutions
 
-data Solution =
-  Solution { opSequence :: [Char],
-             result :: Int }
-  deriving (Show, Eq)
+type Solution = (Int, [Char])
 
 allSolutions :: [Solution]
-allSolutions = [
-  Solution { opSequence = [sym1,sym2,sym3],
-             result = calculate [op1,op2,op3] } |
+allSolutions = [ (calculate [op1,op2,op3], [sym1,sym2,sym3]) |
   (sym1, op1) <- taggedOpers4,
   (sym2, op2) <- taggedOpers4,
   (sym3, op3) <- taggedOpers4 ]
@@ -40,14 +36,14 @@ allSolutions = [
 calculate :: [Op4] -> Int
 calculate opers = foldr (flip (.)) id opers 4 -- flip to fold operands in left-right order
 
-findSolution :: Int -> Maybe Solution
-findSolution n = find (\solution -> result solution == n) allSolutions
+findSolution :: Int -> Maybe [Char]
+findSolution n = Map.lookup n $ Map.fromList allSolutions
 
 
 -- IO
 
-solutionLiteral :: Maybe Solution -> String
-solutionLiteral (Just Solution { opSequence, result }) =
+solutionLiteral :: (Int, Maybe [Char]) -> String
+solutionLiteral (result, Just opSequence) =
   intercalate " = " [leftSide, rightSide]
   where leftSide = "4 " ++ unwords (map (: " 4") opSequence)
         rightSide = show result
@@ -57,4 +53,4 @@ main :: IO()
 main = do
     readLine <- getLine
     let readInt = (read readLine :: Int)
-    putStrLn $ solutionLiteral $ findSolution readInt
+    putStrLn $ solutionLiteral (readInt, findSolution readInt)
