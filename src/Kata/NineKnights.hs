@@ -81,12 +81,6 @@ isNineKnightBoardCLI :: [Char] -> [Char]
 isNineKnightBoardCLI = validationToLiteral . isNineKnightBoard . symbolsToBoard
 
 
-validationToLiteral :: Bool -> [Char]
-validationToLiteral b = if b then "valid" else "invalid"
-
-isNineKnightBoardCLI :: [Char] -> [Char]
-isNineKnightBoardCLI = validationToLiteral . isNineKnightBoard . symbolsToBoard
-
 main :: IO()
 main = do
     l1 <- getLine

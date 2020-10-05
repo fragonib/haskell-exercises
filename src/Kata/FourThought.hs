@@ -1,7 +1,7 @@
 {-# LANGUAGE NamedFieldPuns #-}
 module Kata.FourThought where
 
-1import qualified Data.Map as Map
+import qualified Data.Map as Map
 import Data.List
 
 
@@ -28,16 +28,15 @@ taggedOpers4 = zip opersTags opers4
 type Solution = (Int, [Char])
 
 allSolutions :: [Solution]
-allSolutions = [ (calculate [op1,op2,op3], [sym1,sym2,sym3]) |
-  (sym1, op1) <- taggedOpers4,
-  (sym2, op2) <- taggedOpers4,
-  (sym3, op3) <- taggedOpers4 ]
+allSolutions = [ (calculateSolution [op1,op2,op3], [sym1,sym2,sym3]) | (sym1, op1) <- taggedOpers4,
+                                                                       (sym2, op2) <- taggedOpers4,
+                                                                       (sym3, op3) <- taggedOpers4 ]
 
-calculate :: [Op4] -> Int
-calculate opers = foldr (flip (.)) id opers 4 -- flip to fold operands in left-right order
+calculateSolution :: [Op4] -> Int
+calculateSolution opers = foldr (flip (.)) id opers 4 -- flip to fold operands in left-right order
 
 findSolution :: Int -> Maybe [Char]
-findSolution n = Map.lookup n $ Map.fromList allSolutions
+findSolution result = Map.lookup result $ Map.fromList allSolutions
 
 
 -- IO
