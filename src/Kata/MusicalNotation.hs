@@ -4,9 +4,9 @@ import Data.Char
 import Data.List (intercalate)
 
 
-data Note =
-  Note { symbol :: Char, 
-         repetitions :: Int }
+data InputNote =
+  InputNote { symbol :: Char,
+              repetitions :: Int }
   deriving (Show, Eq)
 
 data NoteLine =
@@ -39,17 +39,17 @@ musicalNotationCLI notesLiteralSeq = intercalate "\n" $
 
 -- Parsing input
 
-parseNotes :: [Char] -> [Note]
+parseNotes :: [Char] -> [InputNote]
 parseNotes notesLiteralSeq = foldr ((:) . symbolToNote) [] $ words notesLiteralSeq
 
-symbolToNote :: [Char] -> Note
+symbolToNote :: [Char] -> InputNote
 symbolToNote (symbol:repetitions)
- | null repetitions = Note symbol 1
- | otherwise = Note symbol (digitToInt $ head repetitions)
+ | null repetitions = InputNote symbol 1
+ | otherwise = InputNote symbol (digitToInt $ head repetitions)
 
 -- Generate output
 
-musicLine :: NoteLine -> [Note] -> [Char]
+musicLine :: NoteLine -> [InputNote] -> [Char]
 musicLine noteLine noteSequence =
   musicLinePrefix noteLine ++
   musicLineContent noteLine noteSequence
@@ -57,12 +57,12 @@ musicLine noteLine noteSequence =
 musicLinePrefix :: NoteLine -> [Char]
 musicLinePrefix noteLine = sign noteLine : ": "
 
-musicLineContent :: NoteLine -> [Note] -> [Char]
+musicLineContent :: NoteLine -> [InputNote] -> [Char]
 musicLineContent noteLine noteSequence = intercalate [separator noteLine] $
   map (noteSymbolToNotePart noteLine) noteSequence
 
-noteSymbolToNotePart :: NoteLine -> Note -> [Char]
-noteSymbolToNotePart noteLine (Note symbol repetitions) = 
+noteSymbolToNotePart :: NoteLine -> InputNote -> [Char]
+noteSymbolToNotePart noteLine (InputNote symbol repetitions) =
   replicate repetitions pitch
   where pitch = if sign noteLine == symbol then '*'
                 else separator noteLine
