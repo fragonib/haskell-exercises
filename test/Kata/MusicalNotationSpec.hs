@@ -13,7 +13,7 @@ spec = do
 
     it "Sample 1" $ do
       SUT.musicalNotationCLI 
-        "C C D E C E D2 C C D E C2 B2 C C D E F E D C B g A B C2 C2"   
+        "C C D E C E D2 C C D E C2 B2 C C D E F E D C B g A B C2 C2"
       `shouldBe` "G:                                                           \n\
                  \F: -------------------------------------*--------------------\n\
                  \E:       *   *          *             *   *                  \n\

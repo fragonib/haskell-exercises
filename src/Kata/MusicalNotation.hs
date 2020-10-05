@@ -1,4 +1,3 @@
-{-# LANGUAGE NamedFieldPuns #-}
 module Kata.MusicalNotation where
 
 import Data.Char
@@ -63,11 +62,10 @@ musicLineContent noteLine noteSequence = intercalate [separator noteLine] $
   map (noteSymbolToNotePart noteLine) noteSequence
 
 noteSymbolToNotePart :: NoteLine -> Note -> [Char]
-noteSymbolToNotePart noteLine singleNote =
-  case singleNote of
-    Note { symbol, repetitions } -> replicate repetitions pitch
-                                   where pitch = if sign noteLine == symbol then '*'
-                                                 else separator noteLine
+noteSymbolToNotePart noteLine (Note symbol repetitions) = 
+  replicate repetitions pitch
+  where pitch = if sign noteLine == symbol then '*'
+                else separator noteLine
 
 -- CLI
 
