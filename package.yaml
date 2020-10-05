@@ -1,10 +1,10 @@
 name:                exercises
 version:             0.1.0.0
-github:              "githubuser/exercises"
+github:              "fragonib/exercises"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2020 Author name here"
+author:              "Francisco González"
+maintainer:          "fragonib@gmail.com"
+copyright:           "2020 Francisco González"
 
 extra-source-files:
 - README.md
