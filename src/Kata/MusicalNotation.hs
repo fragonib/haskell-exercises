@@ -5,14 +5,16 @@ import Data.List (intercalate)
 
 
 data Note =
-  Note { symbol :: Char, repetition :: Int }
+  Note { symbol :: Char, 
+         repetition :: Int }
   deriving (Show, Eq)
 
 data NoteLine =
-  NoteLine { sign :: Char, separator :: Char }
+  NoteLine { sign :: Char, 
+             separator :: Char }
   deriving (Show, Eq)
 
-noteSymbols = [
+noteLines = [
  NoteLine 'G' ' ',
  NoteLine 'F' '-',
  NoteLine 'E' ' ',
@@ -31,7 +33,7 @@ noteSymbols = [
 
 musicalNotationCLI :: [Char] -> [Char]
 musicalNotationCLI notesLiteral = intercalate "\n" $
-  map (`musicLine` notesList) noteSymbols
+  map (`musicLine` notesList) noteLines
   where notesList = parseNotes notesLiteral
 
 
