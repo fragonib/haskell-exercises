@@ -1,46 +1,60 @@
+{-# LANGUAGE NamedFieldPuns #-}
 module Kata.FourThought where
 
 import Data.List
 
+
+-- Operators
+
 type BinaryOp = Int -> Int -> Int
 type Op4 = Int -> Int
-type Solution = ([Char], Int)
 
-opers :: [BinaryOp]
-opers = [(+), (-), (*), quot]
+operators :: [BinaryOp]
+operators = [(+), (-), (*), quot]
 
+opersTags :: [Char]
 opersTags = ['+', '-', '*', '/']
 
 opers4 :: [Op4]
-opers4 = map (\x -> flip x 4) opers -- flip to use fixed 4 value as second operand
+opers4 = map (`flip` 4) operators -- flip to use fixed 4 value as second operand
 
 taggedOpers4 :: [(Char, Op4)]
 taggedOpers4 = zip opersTags opers4
 
+
+-- Solutions
+
+data Solution =
+  Solution { opSequence :: [Char],
+             result :: Int }
+  deriving (Show, Eq)
+
 allSolutions :: [Solution]
-allSolutions = [ ([sym1,sym2,sym3], calculate [op1,op2,op3]) | (sym1, op1) <- taggedOpers4,
-                                                               (sym2, op2) <- taggedOpers4,
-                                                               (sym3, op3) <- taggedOpers4]
+allSolutions = [
+  Solution { opSequence = [sym1,sym2,sym3], 
+             result = calculate [op1,op2,op3] } | 
+  (sym1, op1) <- taggedOpers4,
+  (sym2, op2) <- taggedOpers4,
+  (sym3, op3) <- taggedOpers4 ]
 
 calculate :: [Op4] -> Int
-calculate ls = aggregateOpers ls 4
-
-aggregateOpers :: [Op4] -> Op4
-aggregateOpers = foldr (flip (.)) id -- flip to fold operands in left-right order
+calculate opers = foldr (flip (.)) id opers 4 -- flip to fold operands in left-right order
 
 findSolution :: Int -> Maybe Solution
-findSolution n = find (\el -> snd el == n) allSolutions
+findSolution n = find (\solution -> result solution == n) allSolutions
 
 
 -- IO
 
 solutionLiteral :: Maybe Solution -> String
-solutionLiteral (Just (symbols, result)) = let opSequence = "4 " ++ unwords (map (: " 4") symbols)
-                                           in intercalate " = " [opSequence, show result]
-solutionLiteral _                        = "no solution"
+solutionLiteral (Just Solution { opSequence, result }) = 
+  intercalate " = " [leftSide, rightSide]
+  where leftSide = "4 " ++ unwords (map (: " 4") opSequence)
+        rightSide = show result
+solutionLiteral _ = "no solution"
 
 main :: IO()
 main = do
-    target <- getLine
-    let x = (read target :: Int)
-    putStrLn $ solutionLiteral $ findSolution x
+    readLine <- getLine
+    let readInt = (read readLine :: Int)
+    putStrLn $ solutionLiteral $ findSolution readInt

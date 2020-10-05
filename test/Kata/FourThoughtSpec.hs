@@ -12,8 +12,8 @@ spec = do
   describe "four" $ do
 
     it "opers and precedence" $ do
-      SUT.aggregateOpers [(+ 4), flip (-) 4 , (* 4)] 4 `shouldBe` 16
-      SUT.aggregateOpers [flip div 4, flip (-) 4 , (* 4)] 4 `shouldBe` -12
+      SUT.calculate [(+ 4), flip (-) 4 , (* 4)] `shouldBe` 16
+      SUT.calculate [flip div 4, flip (-) 4 , (* 4)] `shouldBe` -12
 
 
   describe "find solution" $ do
