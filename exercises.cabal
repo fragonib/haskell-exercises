@@ -39,8 +39,7 @@ library
       Kata.Game2048
       Kata.MusicalNotation
       Kata.NineKnights
-      Kata.Revert
-      Kata.Utils
+1º      Kata.Utils
       Kata.Yoda
       Lib
       TimeMachine.Store
