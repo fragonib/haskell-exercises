@@ -1,8 +1,7 @@
 module Kata.Game2048 where
 
-import Data.List
+import Data.List (transpose, intercalate)
 import Data.Char (digitToInt)
-import Debug.Trace (trace)
 import qualified Kata.Utils as U
 
 
@@ -16,18 +15,18 @@ data Movement =
 -- Movement
 
 moveBoard :: Board -> Movement -> Board
-moveBoard board mov = map (`moveRow` mov) board
+moveBoard board mov =
+  case mov of
+    Kata.Game2048.Left -> map foldRowLeft board
+    Kata.Game2048.Right -> map foldRowRight board
+    Kata.Game2048.Up -> transpose $ map foldRowLeft $ transpose board
+    Kata.Game2048.Down -> transpose $ map foldRowRight $ transpose board
 
-moveRow :: Row -> Movement -> Row
-moveRow row m = U.rightPadZero 4 $ aggregateRow $ filter (/=0) row
+foldRowLeft :: Row -> Row
+foldRowLeft row = U.rightPadZero 4 $ aggregateRow $ filter (/=0) row
 
--- foldl (flip $ U.trace2 aggregateRow) [] row
-
-aggregateRowFold :: Int -> [Int] -> [Int]
-aggregateRowFold 0 rowRest = rowRest
-aggregateRowFold el [] = [el]
-aggregateRowFold el rowRest@(x:xs) = if el == x then xs ++ [2*el]
-                                            else rowRest ++ [el]
+foldRowRight :: Row -> Row
+foldRowRight row = reverse $ foldRowLeft $ reverse row
 
 aggregateRow :: [Int] -> [Int]
 aggregateRow [] = []
@@ -35,8 +34,11 @@ aggregateRow [x] = [x]
 aggregateRow (x:y:others) = if x == y then x+y : aggregateRow others
                                       else x   : aggregateRow (y : others)
 
-
-
+--aggregateRowFold :: Int -> [Int] -> [Int]
+--aggregateRowFold 0 rowRest = rowRest
+--aggregateRowFold el [] = [el]
+--aggregateRowFold el rowRest@(x:xs) = if el == x then xs ++ [2*el]
+--                                                else rowRest ++ [el]
 
 -- IO
 
@@ -49,8 +51,8 @@ parseRow ls = map (\num -> read num :: Int) (words ls)
 parseMovement :: String -> Movement
 parseMovement movLine = case digitToInt (head movLine) of
   0 -> Kata.Game2048.Left
-  1 -> Kata.Game2048.Right
-  2 -> Kata.Game2048.Up
+  1 -> Kata.Game2048.Up
+  2 -> Kata.Game2048.Right
   3 -> Kata.Game2048.Down
   _ -> error "Incorrect movement"
 
