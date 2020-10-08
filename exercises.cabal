@@ -39,6 +39,7 @@ library
       Kata.MusicalNotation
       Kata.NineKnights
       Kata.Revert
+      Kata.Utils
       Kata.Yoda
       Lib
       TimeMachine.Store
@@ -78,6 +79,7 @@ test-suite exercises-test
       Kata.FourThoughtSpec
       Kata.MusicalNotationSpec
       Kata.NineKnightsSpec
+      Kata.UtilsSpec
       Kata.YodaSpec
       TimeMachine.StoreRecordsSpec
       TimeMachine.StoreSpec

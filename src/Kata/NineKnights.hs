@@ -1,6 +1,7 @@
 module Kata.NineKnights where
 
 import Data.List
+import qualified Kata.Utils as U
 import Debug.Trace (trace)
 
 
@@ -10,19 +11,11 @@ type Knight = (Int, Int)
 type Board = [Knight]
 
 
--- Utils
-
-or' :: (a -> Bool) -> (a -> Bool) -> a -> Bool
-or' f g a = f a || g a
-
-enumerate :: (Num a, Enum a) => [b] -> [(a, b)]
-enumerate = zip [0..]
-
 
 -- Validating input
 
 isValidSymbol :: Char -> Bool
-isValidSymbol = (== '.') `or'` (== 'k')
+isValidSymbol = (== '.') `U.or` (== 'k')
 
 isValidBoardLiteral :: [Char] -> Bool
 isValidBoardLiteral board | length board /= (boardSize * boardSize) = False
@@ -32,7 +25,7 @@ isValidBoardLiteral board = foldr ((&&) . isValidSymbol) True board
 -- Parsing input
 
 symbolsToBoard :: [Char] -> [Knight]
-symbolsToBoard = foldr symbolToKnight [] . enumerate
+symbolsToBoard = foldr symbolToKnight [] . U.enumerate
 
 symbolToKnight :: (Int, Char) -> [Knight] -> [Knight]
 symbolToKnight (index, symbol) knights = case symbol of
@@ -53,7 +46,7 @@ isNineKnightBoard knights
 
 isCaptureFreeBoard :: Board -> Bool
 isCaptureFreeBoard [] = True
-isCaptureFreeBoard [knight] = True
+isCaptureFreeBoard [single] = True
 isCaptureFreeBoard (knight:others) = isCapturingOtherKnights knight others &&
                                      isCaptureFreeBoard others
 
