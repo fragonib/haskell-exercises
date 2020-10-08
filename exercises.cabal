@@ -36,6 +36,7 @@ library
       Chapter3.Predicates
       Kata.FizzBuzz
       Kata.FourThought
+      Kata.Game2048
       Kata.MusicalNotation
       Kata.NineKnights
       Kata.Revert
@@ -77,6 +78,7 @@ test-suite exercises-test
       Chapter3.PredicatesSpec
       Kata.FizzBuzzSpec
       Kata.FourThoughtSpec
+      Kata.Game2048Spec
       Kata.MusicalNotationSpec
       Kata.NineKnightsSpec
       Kata.UtilsSpec
