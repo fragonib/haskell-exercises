@@ -13,6 +13,14 @@ leftPad :: Int -> Int -> [Int] -> [Int]
 leftPad padInt desiredLength xs =
   replicate times padInt ++ xs
   where times = max 0 (desiredLength - length xs)
+ 
+rightPadZero :: Int -> [Int] -> [Int]
+rightPadZero = rightPad 0 
+  
+rightPad :: Int -> Int -> [Int] -> [Int]
+rightPad padInt desiredLength xs =
+  xs ++ replicate times padInt
+  where times = max 0 (desiredLength - length xs)
 
 leftTruncateZero :: [Int] -> [Int]
 leftTruncateZero = leftTruncate 0

@@ -1,12 +1,17 @@
 module Kata.Game2048 where
 
+import qualified Kata.Utils as U
 import Data.List
 import Data.Char (digitToInt)
 
 
 type Row = [Int]
 type Board = [Row]
-data Movement = Left | Right | Up | Down
+data Movement = 
+  Left | 
+  Right | 
+  Up | 
+  Down
   deriving (Show)
 
 
@@ -16,7 +21,14 @@ game2048 :: Board -> Movement -> Board
 game2048 board mov = map (`moveRow` mov) board
 
 moveRow :: Row -> Movement -> Row
-moveRow r m = r
+moveRow row m = 
+  U.rightPadZero 4 added
+    where shift = foldr (\x acum -> if x /= 0 then x:acum else acum) [] row
+          added = foldr aggregateRow [] shift
+        
+aggregateRow :: Int -> [Int] -> [Int]      
+aggregateRow e [] = [e]
+aggregateRow e r@(y:ys) = if e == y then e*2:ys else e:r
 
 
 -- IO
@@ -33,7 +45,7 @@ parseMovement movLine = case digitToInt (head movLine) of
   1 -> Kata.Game2048.Right
   2 -> Kata.Game2048.Up
   3 -> Kata.Game2048.Down
-  _ -> error "incorrect movement"
+  _ -> error "Incorrect movement"
 
 printBoard :: Board -> String
 printBoard board = intercalate "\n" $ map printRow board
