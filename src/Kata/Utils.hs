@@ -1,5 +1,7 @@
 module Kata.Utils where
 
+import Debug.Trace (trace)
+
 or :: (a -> Bool) -> (a -> Bool) -> a -> Bool
 or f g a = f a || g a
 
@@ -13,10 +15,10 @@ leftPad :: Int -> Int -> [Int] -> [Int]
 leftPad padInt desiredLength xs =
   replicate times padInt ++ xs
   where times = max 0 (desiredLength - length xs)
- 
+
 rightPadZero :: Int -> [Int] -> [Int]
-rightPadZero = rightPad 0 
-  
+rightPadZero = rightPad 0
+
 rightPad :: Int -> Int -> [Int] -> [Int]
 rightPad padInt desiredLength xs =
   xs ++ replicate times padInt
@@ -30,7 +32,10 @@ leftTruncate _ [] = []
 leftTruncate _ [single] = [single]
 leftTruncate el l@(first:rest) =
   if first == el then leftTruncate el rest else l
-  
+
+trace2 :: (Show a, Show b) => (a -> b -> c) -> (a -> b -> c)
+trace2 f x y = trace ("Calling f2(x y) x=" ++ show x ++ " y=" ++ show y) (f x y)
+
 reverse :: [a] -> [a]
 reverse l = rev l []
   where

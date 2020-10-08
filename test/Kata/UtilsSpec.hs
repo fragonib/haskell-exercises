@@ -23,3 +23,8 @@ spec = do
       SUT.leftTruncateZero [0,2,3] `shouldBe` [2,3]
       SUT.leftTruncateZero [0,0,3] `shouldBe` [3]
       SUT.leftTruncateZero [0,0,0] `shouldBe` [0]
+      
+  describe "Tracing" $ do
+
+    it "trace 2" $ do
+      SUT.trace2 (+) 5 2 `shouldBe` 7
