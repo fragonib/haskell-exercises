@@ -1,4 +1,3 @@
-{-# LANGUAGE NamedFieldPuns #-}
 module Kata.FourThought where
 
 import qualified Data.Map as Map
