@@ -39,6 +39,7 @@ library
       Kata.Game2048
       Kata.MusicalNotation
       Kata.NineKnights
+      Kata.TriTiling
       Kata.Utils
       Kata.Yoda
       Lib
@@ -80,6 +81,7 @@ test-suite exercises-test
       Kata.Game2048Spec
       Kata.MusicalNotationSpec
       Kata.NineKnightsSpec
+      Kata.TriTilingSpec
       Kata.UtilsSpec
       Kata.YodaSpec
       TimeMachine.StoreRecordsSpec

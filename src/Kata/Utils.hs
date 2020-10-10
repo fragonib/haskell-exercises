@@ -33,6 +33,9 @@ leftTruncate _ [single] = [single]
 leftTruncate el l@(first:rest) =
   if first == el then leftTruncate el rest else l
 
+trace1 :: (Show a) => (a -> b) -> (a -> b)
+trace1 f x = trace ("Calling f1(x) x=" ++ show x) (f x)
+
 trace2 :: (Show a, Show b) => (a -> b -> c) -> (a -> b -> c)
 trace2 f x y = trace ("Calling f2(x y) x=" ++ show x ++ " y=" ++ show y) (f x y)
 
