@@ -41,6 +41,7 @@ library
       Kata.NineKnights
       Kata.TriTiling
       Kata.Utils
+      Kata.WordCloud
       Kata.Yoda
       Lib
       TimeMachine.Store
@@ -83,6 +84,7 @@ test-suite exercises-test
       Kata.NineKnightsSpec
       Kata.TriTilingSpec
       Kata.UtilsSpec
+      Kata.WordCloudSpec
       Kata.YodaSpec
       TimeMachine.StoreRecordsSpec
       TimeMachine.StoreSpec
