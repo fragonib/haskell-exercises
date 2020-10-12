@@ -6,46 +6,47 @@ import Kata.Utils (trace1, trace2)
 
 type WordHistogram = [WordFreq]
 type WordFreq = (String, Int)
-type WordSize = (Int, Int) -- FontSize, Width
+type WordBox = (Int, Int) -- (Height, Width)
 
 
 -- Word Cloud
 
 calculateCloudHeight :: Int -> Int -> WordHistogram -> Int
 calculateCloudHeight maxLineWidth maxWords wordHistogram =
-  trace1 sum $
-  cloudLineHeights maxLineWidth $
-  wordsInCloud maxWords wordHistogram
+  sum $
+  cloudLinesHeight maxLineWidth $
+  wordBoxes $
+  targetWords maxWords wordHistogram
 
-wordsInCloud :: Int -> WordHistogram -> WordHistogram
-wordsInCloud maxWords wordHistogram =
+targetWords :: Int -> WordHistogram -> WordHistogram
+targetWords maxWords wordHistogram =
   take maxWords $
   sortOn fst $
   filter ((>=5) . snd) wordHistogram
 
-cloudLineHeights :: Int -> WordHistogram -> [Int]
-cloudLineHeights maxLineWidth wordHistogram =
-  case wordHistogram of
+wordBoxes :: WordHistogram -> [WordBox]
+wordBoxes wordHistogram =
+  map (wordBox maxFreq) wordHistogram
+  where maxFreq = maximum $ map snd wordHistogram
+
+cloudLinesHeight :: Int -> [WordBox] -> [Int]
+cloudLinesHeight maxLineWidth wordBoxes =
+  case wordBoxes of
     [] -> []
-    _  -> lineHeight : cloudLineHeights maxLineWidth (drop wordsCount wordHistogram)
-          where (lineHeight, wordsCount) = cloudLineHeight maxLineWidth wordHistogram
+    _  -> lineHeight : cloudLinesHeight maxLineWidth wordsThatNotFitInLine
+          where (lineHeight, countOfWordsThatFit) = cloudLineHeight maxLineWidth wordBoxes
+                wordsThatNotFitInLine = drop countOfWordsThatFit wordBoxes
 
-cloudLineHeight :: Int -> WordHistogram -> (Int, Int)
-cloudLineHeight maxLineWidth wordHistogram =
+cloudLineHeight :: Int -> [WordBox] -> (Int, Int)
+cloudLineHeight maxLineWidth wordBoxes =
   (maxWordHeight, countOfWordsThatFitInLine)
-  where maxWordHeight = maximum $ take countOfWordsThatFitInLine $ map fst wordSizesList
-        countOfWordsThatFitInLine = wordsThatFitInLine maxLineWidth $ map snd wordSizesList
-        wordSizesList = trace1 wordSizes wordHistogram
-
-wordSizes :: WordHistogram -> [WordSize]
-wordSizes wordHistogram =
-  map (wordSizeHeight maxFreq) wordHistogram
-  where maxFreq = maxWordFreq wordHistogram
+  where maxWordHeight = maximum $ take countOfWordsThatFitInLine $ map fst wordBoxes
+        countOfWordsThatFitInLine = wordsThatFitInLine maxLineWidth $ map snd wordBoxes
 
 wordsThatFitInLine :: Int -> [Int] -> Int
 wordsThatFitInLine maxLineWidth wordWidths =
   length $
-  takeWhile (< maxLineWidth) $
+  takeWhile (<= maxLineWidth) $
   scanl1 (+) $
   addSpacer 10 $
   wordWidths
@@ -55,8 +56,8 @@ addSpacer _ [] = []
 addSpacer _ [x] = [x]
 addSpacer spacePts (x:ls) = x : map (+ spacePts) ls
 
-wordSizeHeight :: Int -> WordFreq -> WordSize
-wordSizeHeight maxFreq (word, wordFreq) =
+wordBox :: Int -> WordFreq -> WordBox
+wordBox maxFreq (word, wordFreq) =
   (fontSize, width)
   where fontSize = wordHeightInPts maxFreq wordFreq
         width = wordWidthInPts word fontSize
