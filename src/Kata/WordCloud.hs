@@ -1,7 +1,7 @@
 module Kata.WordCloud where
 
 import Data.List (sortOn)
-import Kata.Utils (trace1, trace2)
+import Kata.Utils (enumerateStartingWith)
 
 
 type WordHistogram = [WordFreq]
@@ -11,16 +11,15 @@ type WordBox = (Int, Int) -- (Height, Width)
 
 -- Word Cloud
 
-calculateCloudHeight :: Int -> Int -> WordHistogram -> Int
-calculateCloudHeight maxLineWidth maxWords wordHistogram =
+calculateCloudHeight :: Int -> WordHistogram -> Int
+calculateCloudHeight maxLineWidth wordHistogram =
   sum $
   cloudLinesHeight maxLineWidth $
   wordBoxes $
-  targetWords maxWords wordHistogram
+  targetWords wordHistogram
 
-targetWords :: Int -> WordHistogram -> WordHistogram
-targetWords maxWords wordHistogram =
-  take maxWords $
+targetWords :: WordHistogram -> WordHistogram
+targetWords wordHistogram =
   sortOn fst $
   filter ((>=5) . snd) wordHistogram
 
@@ -90,18 +89,27 @@ extractWordOccurrences ls =
   case words ls of
      (word:frequency:_) -> (word, read frequency)
 
-outputHeight :: Int -> Int -> String
-outputHeight index height = "CLOUD " ++ show index ++ ": " ++ show height
+outputCloudHeight :: Int -> Int -> String
+outputCloudHeight index height = "CLOUD " ++ show index ++ ": " ++ show height
 
-wordCloudCLI :: [String] -> String
-wordCloudCLI inputLines =
-  let maxWidth = head (extractCloudSize (head inputLines))
-      maxWords = head $ tail $ extractCloudSize (head inputLines)
-      wordHistogram = extractWordHistogram $ takeWhile (/= "0 0") $ tail inputLines
-      cloudHeight = calculateCloudHeight maxWidth maxWords wordHistogram
-   in outputHeight 1 cloudHeight
+wordCloudsHeight :: [String] -> [Int]
+wordCloudsHeight inputLines =
+  case inputLines of
+    [] -> []
+    _ -> firstCloudHeight : wordCloudsHeight (drop (wordsCount + 1) inputLines)
+    where maxLineWidth = head (extractCloudSize (head inputLines))
+          wordsCount = head $ tail $ extractCloudSize (head inputLines)
+          wordHistogram = extractWordHistogram $ take wordsCount $ tail inputLines
+          firstCloudHeight = calculateCloudHeight maxLineWidth wordHistogram
+
+wordCloudsCLI :: [String] -> [String]
+wordCloudsCLI inputLines =
+  map (uncurry outputCloudHeight) $
+  enumerateStartingWith 1 $
+  wordCloudsHeight $
+  takeWhile (/= "0 0") inputLines
 
 main :: IO()
 main = do
   inputLines <- lines <$> getContents
-  putStrLn $ wordCloudCLI inputLines
+  print $ wordCloudsCLI  inputLines
