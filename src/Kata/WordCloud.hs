@@ -13,7 +13,7 @@ type WordSize = (Int, Int) -- FontSize, Width
 
 calculateCloudHeight :: Int -> Int -> WordHistogram -> Int
 calculateCloudHeight maxLineWidth maxWords wordHistogram =
-  sum $
+  trace1 sum $
   cloudLineHeights maxLineWidth $
   wordsInCloud maxWords wordHistogram
 
@@ -25,7 +25,7 @@ wordsInCloud maxWords wordHistogram =
 
 cloudLineHeights :: Int -> WordHistogram -> [Int]
 cloudLineHeights maxLineWidth wordHistogram =
-  case wordHistogram of 
+  case wordHistogram of
     [] -> []
     _  -> lineHeight : cloudLineHeights maxLineWidth (drop wordsCount wordHistogram)
           where (lineHeight, wordsCount) = cloudLineHeight maxLineWidth wordHistogram
@@ -35,18 +35,25 @@ cloudLineHeight maxLineWidth wordHistogram =
   (maxWordHeight, countOfWordsThatFitInLine)
   where maxWordHeight = maximum $ take countOfWordsThatFitInLine $ map fst wordSizesList
         countOfWordsThatFitInLine = wordsThatFitInLine maxLineWidth $ map snd wordSizesList
-        wordSizesList = wordSizes wordHistogram
+        wordSizesList = trace1 wordSizes wordHistogram
 
 wordSizes :: WordHistogram -> [WordSize]
 wordSizes wordHistogram =
   map (wordSizeHeight maxFreq) wordHistogram
-    where maxFreq = maxWordFreq wordHistogram
+  where maxFreq = maxWordFreq wordHistogram
 
 wordsThatFitInLine :: Int -> [Int] -> Int
-wordsThatFitInLine maxLineWidth wordSizesList =
+wordsThatFitInLine maxLineWidth wordWidths =
   length $
   takeWhile (< maxLineWidth) $
-  scanl (+) 0 wordSizesList
+  scanl1 (+) $
+  addSpacer 10 $
+  wordWidths
+
+addSpacer :: Int -> [Int] -> [Int]
+addSpacer _ [] = []
+addSpacer _ [x] = [x]
+addSpacer spacePts (x:ls) = x : map (+ spacePts) ls
 
 wordSizeHeight :: Int -> WordFreq -> WordSize
 wordSizeHeight maxFreq (word, wordFreq) =
@@ -68,6 +75,7 @@ wordWidthInPts word fontSize =
 ceilDiv :: Int -> Int -> Int
 a `ceilDiv` b = (a + b - 1) `div` b
 
+
 -- IO
 
 extractCloudSize :: String -> [Int]
@@ -77,7 +85,9 @@ extractWordHistogram :: [String] -> WordHistogram
 extractWordHistogram = map extractWordOccurrences
 
 extractWordOccurrences :: String -> WordFreq
-extractWordOccurrences ls = case words ls of (word:frequency:_) -> (word, read frequency)
+extractWordOccurrences ls =
+  case words ls of
+     (word:frequency:_) -> (word, read frequency)
 
 outputHeight :: Int -> Int -> String
 outputHeight index height = "CLOUD " ++ show index ++ ": " ++ show height
