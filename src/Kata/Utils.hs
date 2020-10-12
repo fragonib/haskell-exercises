@@ -6,7 +6,10 @@ or :: (a -> Bool) -> (a -> Bool) -> a -> Bool
 or f g a = f a || g a
 
 enumerate :: (Num a, Enum a) => [b] -> [(a, b)]
-enumerate = zip [0..]
+enumerate = enumerateStartingWith 0
+
+enumerateStartingWith :: (Num a, Enum a) => a -> [b] -> [(a, b)]
+enumerateStartingWith start = zip [start..]
 
 leftPadZero :: Int -> [Int] -> [Int]
 leftPadZero = leftPad 0
@@ -34,13 +37,13 @@ leftTruncate el l@(first:rest) =
   if first == el then leftTruncate el rest else l
 
 trace1 :: (Show a, Show b) => (a -> b) -> (a -> b)
-trace1 f x = 
+trace1 f x =
   trace ("f1(x) x=" ++ show x ++ " -> " ++ show result) result
   where result = f x
 
 trace2 :: (Show a, Show b, Show c) => (a -> b -> c) -> (a -> b -> c)
-trace2 f x y = 
-  trace ("f2(x y) x=" ++ show x ++ " y=" ++ show y ++ " -> " ++ show result) result  
+trace2 f x y =
+  trace ("f2(x y) x=" ++ show x ++ " y=" ++ show y ++ " -> " ++ show result) result
   where result = f x y
 
 reverse :: [a] -> [a]
