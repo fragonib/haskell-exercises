@@ -1,6 +1,7 @@
 module Kata.WordCloud where
 
 import Data.List (sortOn)
+import Kata.Utils (trace1, trace2)
 
 
 type WordHistogram = [WordFreq]
@@ -20,17 +21,20 @@ wordsInCloud :: Int -> WordHistogram -> WordHistogram
 wordsInCloud maxWords wordHistogram =
   take maxWords $
   sortOn fst $
-  filter ((<5) . snd) wordHistogram
+  filter ((>=5) . snd) wordHistogram
 
 cloudLineHeights :: Int -> WordHistogram -> [Int]
 cloudLineHeights maxLineWidth wordHistogram =
-  lineHeight : cloudLineHeights maxLineWidth (drop wordsCount wordHistogram)
-  where (lineHeight, wordsCount) = cloudLineHeight maxLineWidth wordHistogram
+  case wordHistogram of 
+    [] -> []
+    _  -> lineHeight : cloudLineHeights maxLineWidth (drop wordsCount wordHistogram)
+          where (lineHeight, wordsCount) = cloudLineHeight maxLineWidth wordHistogram
 
 cloudLineHeight :: Int -> WordHistogram -> (Int, Int)
-cloudLineHeight maxLineWidth wordHistogram = (maxWordHeight, wordsCountThatFitInLine)
-  where maxWordHeight = maximum $ take wordsCountThatFitInLine $ map fst wordSizesList
-        wordsCountThatFitInLine = wordsThatFitInLine maxLineWidth wordSizesList
+cloudLineHeight maxLineWidth wordHistogram =
+  (maxWordHeight, countOfWordsThatFitInLine)
+  where maxWordHeight = maximum $ take countOfWordsThatFitInLine $ map fst wordSizesList
+        countOfWordsThatFitInLine = wordsThatFitInLine maxLineWidth $ map snd wordSizesList
         wordSizesList = wordSizes wordHistogram
 
 wordSizes :: WordHistogram -> [WordSize]
@@ -38,28 +42,27 @@ wordSizes wordHistogram =
   map (wordSizeHeight maxFreq) wordHistogram
     where maxFreq = maxWordFreq wordHistogram
 
-wordsThatFitInLine :: Int -> [WordSize] -> Int
-wordsThatFitInLine maxLineWidth wordSizes =
+wordsThatFitInLine :: Int -> [Int] -> Int
+wordsThatFitInLine maxLineWidth wordSizesList =
   length $
   takeWhile (< maxLineWidth) $
-  scanl (+) 0 $
-  map snd wordSizes
+  scanl (+) 0 wordSizesList
 
-wordSizeHeight :: Int -> WordFreq -> (Int, Int)
+wordSizeHeight :: Int -> WordFreq -> WordSize
 wordSizeHeight maxFreq (word, wordFreq) =
-  let fontSize = wordHeightInPts maxFreq wordFreq
-      width = wordWidthInPts word fontSize
-   in (fontSize, width)
+  (fontSize, width)
+  where fontSize = wordHeightInPts maxFreq wordFreq
+        width = wordWidthInPts word fontSize
 
 maxWordFreq :: WordHistogram -> Int
-maxWordFreq ls = maximum $ map snd ls
+maxWordFreq wordHistogram = maximum $ map snd wordHistogram
 
 wordHeightInPts :: Int -> Int -> Int
 wordHeightInPts maxOccurrences actualOccurrences =
-  8 + (40 * (actualOccurrences - 4)) `ceilDiv` (maxOccurrences - 4)
+  8 + ((40 * (actualOccurrences - 4)) `ceilDiv` (maxOccurrences - 4))
 
 wordWidthInPts :: [Char] -> Int -> Int
-wordWidthInPts word fontSize = 
+wordWidthInPts word fontSize =
   (9 * length word * fontSize) `ceilDiv` 16
 
 ceilDiv :: Int -> Int -> Int

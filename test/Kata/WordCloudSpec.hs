@@ -63,7 +63,7 @@ spec = do
         "orange 12",
         "strawberry 10",
         "0 0"]
-      `shouldBe` "CLOUD 1: 5"
+      `shouldBe` "CLOUD 1: 114"
 
 --    it "sample 2" $ do
 --
