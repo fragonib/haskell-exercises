@@ -112,4 +112,4 @@ wordCloudsCLI inputLines =
 main :: IO()
 main = do
   inputLines <- lines <$> getContents
-  print $ wordCloudsCLI  inputLines
+  putStr $ unlines $ wordCloudsCLI inputLines
