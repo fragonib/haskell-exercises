@@ -34,6 +34,7 @@ library
       Chapter3.Origami
       Chapter3.ParametricTypes
       Chapter3.Predicates
+      Kata.Backslash
       Kata.FizzBuzz
       Kata.FourThought
       Kata.Game2048
@@ -77,6 +78,7 @@ test-suite exercises-test
       Chapter3.FoldsSpec
       Chapter3.HighOrderFunctionsSpec
       Chapter3.PredicatesSpec
+      Kata.BackslashSpec
       Kata.FizzBuzzSpec
       Kata.FourThoughtSpec
       Kata.Game2048Spec

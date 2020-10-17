@@ -5,6 +5,10 @@ import Debug.Trace (trace)
 or :: (a -> Bool) -> (a -> Bool) -> a -> Bool
 or f g a = f a || g a
 
+and :: (a -> Bool) -> (a -> Bool) -> a -> Bool
+and f g a = f a && g a
+
+
 enumerate :: (Num a, Enum a) => [b] -> [(a, b)]
 enumerate = enumerateStartingWith 0
 
