@@ -1,6 +1,6 @@
 module Kata.Backslash where
 
-import qualified Kata.Utils as U
+import Kata.Utils
 
 
 -- Backslash
@@ -18,7 +18,7 @@ scapeOne c
   | otherwise = [c]
 
 isSpecial :: Char -> Bool
-isSpecial = ((>= '!') `U.and` (<= '*')) `U.or` ((>= '[') `U.and` (<= ']'))
+isSpecial = ((>= '!') .&&. (<= '*')) .||. ((>= '[') .&&. (<= ']'))
 
 -- IO
 
