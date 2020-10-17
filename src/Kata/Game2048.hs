@@ -57,7 +57,7 @@ parseMovement movLine = case digitToInt (head movLine) of
   _ -> error "Incorrect movement"
 
 printBoard :: Board -> String
-printBoard board = intercalate "\n" $ map printRow wboard
+printBoard board = intercalate "\n" $ map printRow board
 
 printRow :: Row -> String
 printRow row = unwords $ map show row

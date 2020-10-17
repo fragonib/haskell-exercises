@@ -104,8 +104,7 @@ wordCloudsHeight inputLines =
 
 wordCloudsCLI :: [String] -> [String]
 wordCloudsCLI inputLines =
-  map (uncurry outputCloudHeight) $
-  enumerateStartingWith 1 $
+  map (uncurry outputCloudHeight) $ enumerateStartingWith 1 $
   wordCloudsHeight $
   takeWhile (/= "0 0") inputLines
 
