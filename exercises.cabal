@@ -40,6 +40,7 @@ library
       Kata.Game2048
       Kata.MusicalNotation
       Kata.NineKnights
+      Kata.Sort
       Kata.TriTiling
       Kata.Utils
       Kata.WordCloud
@@ -84,6 +85,7 @@ test-suite exercises-test
       Kata.Game2048Spec
       Kata.MusicalNotationSpec
       Kata.NineKnightsSpec
+      Kata.SortSpec
       Kata.TriTilingSpec
       Kata.UtilsSpec
       Kata.WordCloudSpec
