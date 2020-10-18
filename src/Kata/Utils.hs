@@ -8,7 +8,6 @@ import Debug.Trace (trace)
 (.&&.) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
 (.&&.) f g a = f a && g a
 
-
 enumerate :: (Num a, Enum a) => [b] -> [(a, b)]
 enumerate = enumerateStartingWith 0
 
