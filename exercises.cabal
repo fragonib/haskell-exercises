@@ -40,6 +40,7 @@ library
       Kata.Game2048
       Kata.MusicalNotation
       Kata.NineKnights
+      Kata.Shopaholic
       Kata.Sort
       Kata.TriTiling
       Kata.Utils
@@ -85,6 +86,7 @@ test-suite exercises-test
       Kata.Game2048Spec
       Kata.MusicalNotationSpec
       Kata.NineKnightsSpec
+      Kata.ShopaholicSpec
       Kata.SortSpec
       Kata.TriTilingSpec
       Kata.UtilsSpec
