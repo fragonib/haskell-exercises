@@ -1,7 +1,7 @@
 module Kata.SnapperSpec where
 
 import Test.Hspec
-import Kata.Snapper (isLightOn, Snapper(..), snapperCLI)
+import Kata.Snapper (isLightOn, Snapper(..), snapperCLI, snapAll)
 
 
 spec :: Spec
@@ -10,16 +10,16 @@ spec = do
   describe "Is ligth on?" $ do
 
     it "1 0 -> False" $ do
-       isLightOn 1 0 `shouldBe` OFF
+       isLightOn (snapAll 1 0) `shouldBe` False
           
     it "1 1 -> True" $ do
-       isLightOn 1 1 `shouldBe` ON    
+       isLightOn (snapAll 1 1) `shouldBe` True
       
     it "4 0 -> False" $ do
-       isLightOn 4 0 `shouldBe` OFF
-          
+       isLightOn (snapAll 4 0) `shouldBe` False
+
     it "4 47 -> True" $ do
-       isLightOn 4 47 `shouldBe` ON
+       isLightOn (snapAll 4 47) `shouldBe` True
 
 
   describe "IO" $ do
@@ -38,5 +38,5 @@ spec = do
         "Case #3: OFF",
         "Case #4: ON"
         ]
-        
-        
+
+
