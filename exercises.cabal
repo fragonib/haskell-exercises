@@ -41,6 +41,7 @@ library
       Kata.MusicalNotation
       Kata.NineKnights
       Kata.Shopaholic
+      Kata.SimonSays
       Kata.Snapper
       Kata.Sort
       Kata.TriTiling
@@ -88,6 +89,7 @@ test-suite exercises-test
       Kata.MusicalNotationSpec
       Kata.NineKnightsSpec
       Kata.ShopaholicSpec
+      Kata.SimonSaysSpec
       Kata.SnapperSpec
       Kata.SortSpec
       Kata.TriTilingSpec
