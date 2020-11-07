@@ -58,6 +58,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , extra
   default-language: Haskell2010
 
 executable exercises-exe
@@ -71,6 +72,7 @@ executable exercises-exe
       base >=4.7 && <5
     , containers
     , exercises
+    , extra
   default-language: Haskell2010
 
 test-suite exercises-test
@@ -107,5 +109,6 @@ test-suite exercises-test
     , base >=4.7 && <5
     , containers
     , exercises
+    , extra
     , hspec
   default-language: Haskell2010

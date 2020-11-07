@@ -1,5 +1,7 @@
 module Kata.SimonSays where
 
+import Data.List.Extra
+
 -- Core
 
 simonSays :: String -> String
@@ -11,7 +13,7 @@ simonSays phrase =
 
 isSimonOrder :: [String] -> Bool
 isSimonOrder phraseWords =
-  take 2 phraseWords == ["simon", "says"]
+  map lower (take 2 phraseWords) == ["simon", "says"]
 
 simonCommand :: [String] -> String
 simonCommand = unwords . drop 2
