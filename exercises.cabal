@@ -34,10 +34,14 @@ library
       Chapter3.Origami
       Chapter3.ParametricTypes
       Chapter3.Predicates
+      Elephant.Functors.Alternative
+      Elephant.Functors.Tree
       Kata.Backslash
+      Kata.Catalan
       Kata.FizzBuzz
       Kata.FourThought
       Kata.Game2048
+      Kata.Monads
       Kata.MusicalNotation
       Kata.NineKnights
       Kata.Shopaholic
@@ -59,6 +63,7 @@ library
       base >=4.7 && <5
     , containers
     , extra
+    , mtl
   default-language: Haskell2010
 
 executable exercises-exe
@@ -73,6 +78,7 @@ executable exercises-exe
     , containers
     , exercises
     , extra
+    , mtl
   default-language: Haskell2010
 
 test-suite exercises-test
@@ -88,6 +94,7 @@ test-suite exercises-test
       Kata.FizzBuzzSpec
       Kata.FourThoughtSpec
       Kata.Game2048Spec
+      Kata.MonadsSpec
       Kata.MusicalNotationSpec
       Kata.NineKnightsSpec
       Kata.ShopaholicSpec
@@ -111,4 +118,5 @@ test-suite exercises-test
     , exercises
     , extra
     , hspec
+    , mtl
   default-language: Haskell2010
