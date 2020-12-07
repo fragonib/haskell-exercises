@@ -36,6 +36,7 @@ library
       Chapter3.Predicates
       Elephant.Functors.Alternative
       Elephant.Functors.Tree
+      Kata.AddingWords
       Kata.Backslash
       Kata.Catalan
       Kata.FizzBuzz
@@ -90,7 +91,6 @@ test-suite exercises-test
       Chapter3.FoldsSpec
       Chapter3.HighOrderFunctionsSpec
       Chapter3.PredicatesSpec
-      Kata.AddingWords
       Kata.BackslashSpec
       Kata.FizzBuzzSpec
       Kata.FourThoughtSpec
