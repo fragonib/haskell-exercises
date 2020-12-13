@@ -25,17 +25,17 @@ spec = do
        SUT.addList [1, 2, 3] (\x -> [x*10, x*100])
           `shouldBe` SUT.add [1, 2, 3] (\x -> [x*10, x*100])
 
-    it "addReader" $ do
-       -- Expectation: 20 = (3+2) + (3+2)*3
-       SUT.addReader (+2) (*) 3
-          `shouldBe` SUT.add (+2) (*) 3
-
     it "addWriter" $ do
        -- Expectation: IntWriterM (8, "Input: 2\nOper: 6") = IntWriterM
        SUT.addWriter (SUT.intWriter 2 "Input: 2\n")
                      (\x -> SUT.intWriter (x*3) ("Oper: " ++ show (x*3)))
           `shouldBe` SUT.add (SUT.intWriter 2 "Input: 2\n")
                      (\x -> SUT.intWriter (x*3) ("Oper: " ++ show (x*3)))
+
+    it "addReader" $ do
+       -- Expectation: 20 = (3+2) + (3+2)*3
+       SUT.addReader (+2) (*) 3
+          `shouldBe` SUT.add (+2) (*) 3
 
     it "addState" $ do
        -- Expectation: IntStateM (8, "State 0") = IntStateM (2+(2*3), "State 0")
