@@ -25,16 +25,19 @@ addStuff = do
 -}
 
 
--- Dada la función
+-- Ejercicio: Dada la función
 
 add :: Monad m => m Int -> (Int -> m Int) -> m Int
-add valueM func = do
-    a <- valueM
-    b <- func a
+add initialM transformer = do
+    a <- initialM
+    b <- transformer a
     return $ a + b
 
 -- Escribir las funciones siguientes de modo que hagan lo mismo que add,
 -- pero sin usar ni la notación 'do' ni los operadores '>>' y '>>='
+
+
+-- Solución:
 
 --
 -- Add Maybe
@@ -42,7 +45,8 @@ add valueM func = do
 
 addMaybe :: Maybe Int -> (Int -> Maybe Int) -> Maybe Int
 addMaybe Nothing _ = Nothing
-addMaybe m@(Just a) f = (+) <$> m <*> f a
+addMaybe initialMaybeM@(Just value) transformer =
+  (+) <$> initialMaybeM <*> transformer value
 
 --
 -- Add List
@@ -50,7 +54,8 @@ addMaybe m@(Just a) f = (+) <$> m <*> f a
 
 addList :: [Int] -> (Int -> [Int]) -> [Int]
 addList [] _ = []
-addList initialList transformer = [a + b | a <- initialList, b <- transformer a]
+addList initialListM transformer =
+  [a + b | a <- initialListM, b <- transformer a]
 
 --
 -- Add Writer
@@ -62,8 +67,8 @@ intWriter :: Int -> String -> IntWriterM
 intWriter value logLine = writer (value, logLine)
 
 addWriter :: IntWriterM -> (Int -> IntWriterM) -> IntWriterM
-addWriter initialWriter transformer =
-  let (initialValue, initialMonoid) = runWriter initialWriter
+addWriter initialWriterM transformer =
+  let (initialValue, initialMonoid) = runWriter initialWriterM
       (newValue, newMonoid) = runWriter $ transformer initialValue
   in intWriter (initialValue + newValue) (initialMonoid `mappend` newMonoid)
 
@@ -74,20 +79,22 @@ addWriter initialWriter transformer =
 type IntFuncM = Int -> Int
 
 addReader :: IntFuncM -> (Int -> IntFuncM) -> IntFuncM
-addReader initialFunc transformer =
-  \x -> let a = initialFunc x
-            b = transformer a x
-        in a + b
+addReader initialFuncM transformer = \x ->
+  let initialValue = initialFuncM x
+      newValue = transformer initialValue x
+  in initialValue + newValue
 
 --
 -- Add State
 --
 
+-- State is defined such:
 -- newtype State s a = State { runState :: s -> (a, s) }
 
-addState :: State Int Int -> (Int -> State Int Int) -> State Int Int
-addState stateM transformer = state $ \s ->
-  let
-      (initialValue, initialState) = runState stateM s
+type IntStateM = State String Int
+
+addState :: IntStateM -> (Int -> IntStateM) -> IntStateM
+addState initialStateM transformer = state $ \s ->
+  let (initialValue, initialState) = runState initialStateM s
       (newValue, newState) = runState (transformer initialValue) initialState
   in (initialValue + newValue, newState)
