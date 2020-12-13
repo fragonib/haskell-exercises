@@ -44,6 +44,7 @@ library
       Kata.Game2048
       Kata.Monads
       Kata.MusicalNotation
+      Kata.MyState
       Kata.NineKnights
       Kata.Shopaholic
       Kata.SimonSays
