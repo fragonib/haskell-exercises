@@ -24,4 +24,8 @@ spec = do
        SUT.addWriter (SUT.intWriter 2 "Input: 2") (\x -> SUT.intWriter (x*3) ("Oper: " ++ show (x*3)))
           `shouldBe` SUT.add (SUT.intWriter 2 "Input: 2") (\x -> SUT.intWriter (x*3) ("Oper: " ++ show (x*3)))
           
+    it "addReader" $ do
+       SUT.addReader (+3) (*) 2
+          `shouldBe` SUT.add (+3) (*) 2 
+    
         
