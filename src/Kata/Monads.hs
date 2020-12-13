@@ -1,6 +1,7 @@
 module Kata.Monads where
 
 import Control.Monad.Writer
+import Control.Monad.State
 import Data.Monoid ()
 
 {-
@@ -78,9 +79,15 @@ addReader initialFunc transformer =
             b = transformer a x
         in a + b
 
+--
 -- Add State
+--
 
---newtype State s a = State { runState :: s -> (a, s) }
+-- newtype State s a = State { runState :: s -> (a, s) }
 
---addState :: State Int Int -> (Int -> State Int Int) -> State Int Int
---addState
+addState :: State Int Int -> (Int -> State Int Int) -> State Int Int
+addState stateM transformer = state $ \s ->
+  let
+      (initialValue, initialState) = runState stateM s
+      (newValue, newState) = runState (transformer initialValue) initialState
+  in (initialValue + newValue, newState)
