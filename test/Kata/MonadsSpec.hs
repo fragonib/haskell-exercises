@@ -10,22 +10,28 @@ import qualified Kata.Monads as SUT
 spec :: Spec
 spec = do
 
-  describe "add monad" $ do
+  describe "addStuff monad equivalents" $ do
 
     it "addMaybe" $ do
+       -- Just 8 = Just 2 + (2*3)
        SUT.addMaybe (Just 2) (\x -> Just (x*3)) 
-          `shouldBe` SUT.add (Just 2) (\x -> Just (x*3))
+          `shouldBe` SUT.add (Just 2) (\x -> Just (x*3)) 
 
     it "addList" $ do
-       SUT.addList [1, 2, 3] (\x -> [x-1, x+1]) 
-          `shouldBe` SUT.add [1, 2, 3] (\x -> [x-1, x+1])
+       -- [11,101,22,202,33,303] = [1+10, 1+100, 2+20, 2+200, 3+30, 3+300]
+       SUT.addList [1, 2, 3] (\x -> [x*10, x*100]) 
+          `shouldBe` SUT.add [1, 2, 3] (\x -> [x*10, x*100])
            
     it "addWriter" $ do
-       SUT.addWriter (SUT.intWriter 2 "Input: 2") (\x -> SUT.intWriter (x*3) ("Oper: " ++ show (x*3)))
-          `shouldBe` SUT.add (SUT.intWriter 2 "Input: 2") (\x -> SUT.intWriter (x*3) ("Oper: " ++ show (x*3)))
+       -- IntWriterM (8, "Input: 2\nOper: 6") = IntWriterM
+       SUT.addWriter (SUT.intWriter 2 "Input: 2\n") 
+                     (\x -> SUT.intWriter (x*3) ("Oper: " ++ show (x*3)))
+          `shouldBe` SUT.add (SUT.intWriter 2 "Input: 2\n") 
+                     (\x -> SUT.intWriter (x*3) ("Oper: " ++ show (x*3)))
           
     it "addReader" $ do
-       SUT.addReader (+3) (*) 2
-          `shouldBe` SUT.add (+3) (*) 2 
+       -- 20 = (3+2) + (3+2)*3
+       SUT.addReader (+2) (*) 3
+          `shouldBe` SUT.add (+2) (*) 3 
     
         

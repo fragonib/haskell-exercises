@@ -1,12 +1,13 @@
 module Kata.Monads where
 
 import Control.Monad.Writer
-import Data.Monoid (mappend)
+import Data.Monoid ()
 
 {-
 -- Do Notation
 
 addStuff = Just 3 >>= (\x -> Just 5 >>= (\y -> Just (x + y)
+
 addStuff :: Maybe String
 addStuff = Just 3 >>= (\x ->
       Just 5 >>= (\y ->
@@ -34,19 +35,25 @@ add valueM func = do
 -- Escribir las funciones siguientes de modo que hagan lo mismo que add,
 -- pero sin usar ni la notación 'do' ni los operadores '>>' y '>>='
 
+--
 -- Add Maybe
+--
 
 addMaybe :: Maybe Int -> (Int -> Maybe Int) -> Maybe Int
 addMaybe Nothing _ = Nothing
 addMaybe m@(Just a) f = (+) <$> m <*> f a
 
+--
 -- Add List
+--
 
 addList :: [Int] -> (Int -> [Int]) -> [Int]
 addList [] _ = []
 addList initialList transformer = [a + b | a <- initialList, b <- transformer a]
 
+--
 -- Add Writer
+--
 
 type IntWriterM = Writer String Int
 
@@ -59,7 +66,9 @@ addWriter initialWriter transformer =
       (newValue, newMonoid) = runWriter $ transformer initialValue
   in intWriter (initialValue + newValue) (initialMonoid `mappend` newMonoid)
 
+--
 -- Add Reader
+--
 
 type IntFuncM = Int -> Int
 
@@ -69,5 +78,9 @@ addReader initialFunc transformer =
             b = transformer a x
         in a + b
 
--- newtype State s a = State { runState :: s -> (a, s) }
--- addState :: State Int Int -> (Int -> State Int Int) -> State Int Int
+-- Add State
+
+--newtype State s a = State { runState :: s -> (a, s) }
+
+--addState :: State Int Int -> (Int -> State Int Int) -> State Int Int
+--addState
