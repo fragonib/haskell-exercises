@@ -26,11 +26,11 @@ spec = do
           `shouldBe` SUT.add [1, 2, 3] (\x -> [x*10, x*100])
 
     it "addWriter" $ do
-       -- Expectation: IntWriterM (8, "Input: 2\nOper: 6") = IntWriterM
-       SUT.addWriter (SUT.intWriter 2 "Input: 2\n")
-                     (\x -> SUT.intWriter (x*3) ("Oper: " ++ show (x*3)))
-          `shouldBe` SUT.add (SUT.intWriter 2 "Input: 2\n")
-                     (\x -> SUT.intWriter (x*3) ("Oper: " ++ show (x*3)))
+       -- Expectation: IntWriterM (8, [Input: 2", "Oper: 6"]) = IntWriterM
+       SUT.addWriter (SUT.intWriter 2 ["Input: 2"])
+                     (\x -> SUT.intWriter (x*3) ["Oper: " ++ show (x*3)])
+          `shouldBe` SUT.add (SUT.intWriter 2 ["Input: 2"])
+                                          (\x -> SUT.intWriter (x*3) ["Oper: " ++ show (x*3)])
 
     it "addReader" $ do
        -- Expectation: 20 = (3+2) + (3+2)*3

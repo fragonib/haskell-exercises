@@ -1,6 +1,5 @@
 module Kata.Monads where
 
-import Control.Monad.Writer
 import Control.Monad.State
 import Data.Monoid ()
 
@@ -46,7 +45,7 @@ add initialM transformer = do
 addMaybe :: Maybe Int -> (Int -> Maybe Int) -> Maybe Int
 addMaybe Nothing _ = Nothing
 addMaybe initialMaybeM@(Just value) transformer =
-  (+) <$> initialMaybeM <*> transformer value
+  (+ value) <$> transformer value
 
 --
 -- Add List
@@ -61,12 +60,17 @@ addList initialListM transformer =
 -- Add Writer
 --
 
-type IntWriterM = Writer String Int
+newtype Writer w a = Writer (a, w) deriving (Show, Eq)
 
-intWriter :: Int -> String -> IntWriterM
-intWriter value logLine = writer (value, logLine)
+type IntWriterM w = Writer w Int
 
-addWriter :: IntWriterM -> (Int -> IntWriterM) -> IntWriterM
+intWriter :: Int -> w -> IntWriterM w
+intWriter value logLine = Writer (value, logLine)
+
+runWriter :: Writer w a -> (a, w)
+runWriter (Writer t) = t
+
+addWriter :: Monoid w => IntWriterM w -> (Int -> IntWriterM w) -> IntWriterM w
 addWriter initialWriterM transformer =
   let (initialValue, initialMonoid) = runWriter initialWriterM
       (newValue, newMonoid) = runWriter $ transformer initialValue
@@ -79,10 +83,11 @@ addWriter initialWriterM transformer =
 type IntFuncM = Int -> Int
 
 addReader :: IntFuncM -> (Int -> IntFuncM) -> IntFuncM
-addReader initialFuncM transformer = \x ->
-  let initialValue = initialFuncM x
+addReader initialFuncM transformer x
+  = let
+      initialValue = initialFuncM x
       newValue = transformer initialValue x
-  in initialValue + newValue
+    in initialValue + newValue
 
 --
 -- Add State

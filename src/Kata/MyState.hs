@@ -29,13 +29,13 @@ instance Monad (MyState s) where
                                              (MyState g) = f' a    
                                          in g s' 
 
--- (s -> (s, ()) 
+-- (s -> (s, ())
 
-put :: s -> MyState s () 
+put :: s -> MyState s ()
 put s = MyState $ \_ -> (s, ())
 
 -- (s -> (s, s))
-get :: MyState s s 
+get :: MyState s s
 get = MyState $ \s -> (s, s)
 
 modify :: (s -> s) -> MyState s ()
