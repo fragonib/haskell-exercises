@@ -1,7 +1,7 @@
 {-# LANGUAGE LambdaCase #-}
-module Chapter3.HighOrderFunctions where
+module PracticalHaskell.Chapter3.HighOrderFunctions where
 
-import qualified Chapter2.Client as C
+import qualified PracticalHaskell.Chapter2.Client as C
 
 
 myFilter :: (a -> Bool) -> [a] -> [a]

@@ -1,11 +1,9 @@
 {-# LANGUAGE FlexibleInstances #-}
-
 module Kata.MonadsSpec where
 
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
-import Control.Monad.Writer 
 import Control.Monad.State
 import qualified Kata.Monads as SUT
 
@@ -29,8 +27,7 @@ spec = do
        -- Expectation: IntWriterM (8, [Input: 2", "Oper: 6"]) = IntWriterM
        SUT.addWriter (SUT.intWriter 2 ["Input: 2"])
                      (\x -> SUT.intWriter (x*3) ["Oper: " ++ show (x*3)])
-          `shouldBe` SUT.add (SUT.intWriter 2 ["Input: 2"])
-                                          (\x -> SUT.intWriter (x*3) ["Oper: " ++ show (x*3)])
+          `shouldBe` SUT.intWriter 8 ["Input: 2", "Oper: 6"]
 
     it "addReader" $ do
        -- Expectation: 20 = (3+2) + (3+2)*3

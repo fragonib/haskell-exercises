@@ -1,9 +1,9 @@
-module Chapter2.ClientSpec (spec) where
+module PracticalHaskell.Chapter2.ClientSpec (spec) where
 
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
-import Chapter2.Client
+import PracticalHaskell.Chapter2.Client
 
 spec :: Spec
 spec = do

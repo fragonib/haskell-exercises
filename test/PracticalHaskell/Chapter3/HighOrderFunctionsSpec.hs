@@ -1,10 +1,10 @@
-module Chapter3.HighOrderFunctionsSpec (spec) where
+module PracticalHaskell.Chapter3.HighOrderFunctionsSpec (spec) where
 
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
-import qualified Chapter3.HighOrderFunctions as SUT
-import Chapter2.Client
+import qualified PracticalHaskell.Chapter3.HighOrderFunctions as SUT
+import PracticalHaskell.Chapter2.Client
 
 spec :: Spec
 spec = do

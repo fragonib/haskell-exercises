@@ -1,9 +1,9 @@
-module Chapter3.Origami where
+module PracticalHaskell.Chapter3.Origami where
 
 filter :: (a -> Bool) -> [a] -> [a]
 filter pred (x:xs) = if pred x
-                  then x : Chapter3.Origami.filter pred xs
-                  else     Chapter3.Origami.filter pred xs
+                  then x : PracticalHaskell.Chapter3.Origami.filter pred xs
+                  else     PracticalHaskell.Chapter3.Origami.filter pred xs
 
 filterAsFold :: (a -> Bool) -> [a] -> [a]
 filterAsFold p = foldr (\x l -> if p x then x : l else l) []
@@ -24,7 +24,7 @@ filterAsFold p = foldr (\x l -> if p x then x : l else l) []
 
 map :: (a -> b) -> [a] -> [b]
 map _ []     = []
-map f (x:xs) = f x : Chapter3.Origami.map f xs
+map f (x:xs) = f x : PracticalHaskell.Chapter3.Origami.map f xs
 
 mapAsFold :: (a -> b) -> [a] -> [b]
 mapAsFold f = foldr (\x l -> f x : l) []

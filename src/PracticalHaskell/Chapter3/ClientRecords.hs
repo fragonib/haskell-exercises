@@ -1,5 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
-module Chapter3.ClientRecords where
+module PracticalHaskell.Chapter3.ClientRecords where
 
 data Client = 
   GovOrg     { name :: String } |

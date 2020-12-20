@@ -1,11 +1,11 @@
-module Chapter3.PredicatesSpec (spec) where
+module PracticalHaskell.Chapter3.PredicatesSpec (spec) where
 
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
 
-import qualified Chapter3.Predicates as SUT
-import Chapter3.ClientRecords
+import qualified PracticalHaskell.Chapter3.Predicates as SUT
+import PracticalHaskell.Chapter3.ClientRecords
 
 spec :: Spec
 spec = do

@@ -1,8 +1,8 @@
 {-# LANGUAGE RecordWildCards #-}
-module Chapter3.Predicates where
+module PracticalHaskell.Chapter3.Predicates where
 
 import Data.List
-import Chapter3.ClientRecords
+import PracticalHaskell.Chapter3.ClientRecords
 import Data.Function (on)
 
 

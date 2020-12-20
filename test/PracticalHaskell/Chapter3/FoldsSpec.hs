@@ -1,11 +1,11 @@
-module Chapter3.FoldsSpec (spec) where
+module PracticalHaskell.Chapter3.FoldsSpec (spec) where
 
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
 
-import Chapter3.ClientRecords
-import qualified Chapter3.Folds as SUT
+import PracticalHaskell.Chapter3.ClientRecords
+import qualified PracticalHaskell.Chapter3.Folds as SUT
 
 spec :: Spec
 spec = do

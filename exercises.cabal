@@ -25,15 +25,6 @@ source-repository head
 
 library
   exposed-modules:
-      Chapter2.Client
-      Chapter2.MyMath
-      Chapter3.ClientRecords
-      Chapter3.Comprehension
-      Chapter3.Folds
-      Chapter3.HighOrderFunctions
-      Chapter3.Origami
-      Chapter3.ParametricTypes
-      Chapter3.Predicates
       Elephant.Functors.Alternative
       Elephant.Functors.Tree
       Kata.AddingWords
@@ -55,8 +46,17 @@ library
       Kata.WordCloud
       Kata.Yoda
       Lib
-      TimeMachine.Store
-      TimeMachine.StoreRecords
+      PracticalHaskell.Chapter2.Client
+      PracticalHaskell.Chapter2.MyMath
+      PracticalHaskell.Chapter3.ClientRecords
+      PracticalHaskell.Chapter3.Comprehension
+      PracticalHaskell.Chapter3.Folds
+      PracticalHaskell.Chapter3.HighOrderFunctions
+      PracticalHaskell.Chapter3.Origami
+      PracticalHaskell.Chapter3.ParametricTypes
+      PracticalHaskell.Chapter3.Predicates
+      PracticalHaskell.TimeMachine.Store
+      PracticalHaskell.TimeMachine.StoreRecords
   other-modules:
       Paths_exercises
   hs-source-dirs:
@@ -87,11 +87,6 @@ test-suite exercises-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Chapter2.ClientSpec
-      Chapter2.MyMathSpec
-      Chapter3.FoldsSpec
-      Chapter3.HighOrderFunctionsSpec
-      Chapter3.PredicatesSpec
       Kata.BackslashSpec
       Kata.FizzBuzzSpec
       Kata.FourThoughtSpec
@@ -107,8 +102,13 @@ test-suite exercises-test
       Kata.UtilsSpec
       Kata.WordCloudSpec
       Kata.YodaSpec
-      TimeMachine.StoreRecordsSpec
-      TimeMachine.StoreSpec
+      PracticalHaskell.Chapter2.ClientSpec
+      PracticalHaskell.Chapter2.MyMathSpec
+      PracticalHaskell.Chapter3.FoldsSpec
+      PracticalHaskell.Chapter3.HighOrderFunctionsSpec
+      PracticalHaskell.Chapter3.PredicatesSpec
+      PracticalHaskell.TimeMachine.StoreRecordsSpec
+      PracticalHaskell.TimeMachine.StoreSpec
       Paths_exercises
   hs-source-dirs:
       test

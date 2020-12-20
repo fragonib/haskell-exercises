@@ -1,4 +1,4 @@
-module Chapter3.ParametricTypes where
+module PracticalHaskell.Chapter3.ParametricTypes where
 
 swapTriple :: (a, b, c) -> (b, c, a)
 swapTriple (x,y,z) = (y,z,x)

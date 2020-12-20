@@ -1,10 +1,10 @@
 {-# LANGUAGE TransformListComp #-}
 {-# LANGUAGE ParallelListComp #-}
 
-module Chapter3.Comprehension (main) where
+module PracticalHaskell.Chapter3.Comprehension (main) where
 
-import Chapter3.ClientRecords
-import Chapter3.Folds (clientName)
+import PracticalHaskell.Chapter3.ClientRecords
+import PracticalHaskell.Chapter3.Folds (clientName)
 import Data.Char
 import GHC.Exts
 

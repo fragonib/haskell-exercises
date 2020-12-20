@@ -1,5 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
-module TimeMachine.StoreRecords where
+module PracticalHaskell.TimeMachine.StoreRecords where
 
 data TimeMachine = TimeMachine
   { manufacturer :: String,

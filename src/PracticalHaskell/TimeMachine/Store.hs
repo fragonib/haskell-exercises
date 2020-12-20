@@ -1,4 +1,4 @@
-module TimeMachine.Store where
+module PracticalHaskell.TimeMachine.Store where
 
 data TimeMachine = TimeMachine Manufacturer Model Name TimeTravel Price
             deriving (Show, Eq)

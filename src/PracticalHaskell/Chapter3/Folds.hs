@@ -1,6 +1,6 @@
-module Chapter3.Folds where
+module PracticalHaskell.Chapter3.Folds where
 
-import qualified Chapter3.ClientRecords as C
+import qualified PracticalHaskell.Chapter3.ClientRecords as C
 
 
 -- Fold 

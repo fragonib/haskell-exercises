@@ -1,9 +1,9 @@
-module Chapter2.MyMathSpec (spec) where
+module PracticalHaskell.Chapter2.MyMathSpec (spec) where
 
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
-import qualified Chapter2.MyMath as SUT
+import qualified PracticalHaskell.Chapter2.MyMath as SUT
 
 spec :: Spec
 spec = do

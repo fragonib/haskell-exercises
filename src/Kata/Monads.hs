@@ -44,8 +44,8 @@ add initialM transformer = do
 
 addMaybe :: Maybe Int -> (Int -> Maybe Int) -> Maybe Int
 addMaybe Nothing _ = Nothing
-addMaybe initialMaybeM@(Just value) transformer =
-  (+ value) <$> transformer value
+addMaybe (Just value) transformer =
+  (value +) <$> transformer value
 
 --
 -- Add List
@@ -60,7 +60,9 @@ addList initialListM transformer =
 -- Add Writer
 --
 
-newtype Writer w a = Writer (a, w) deriving (Show, Eq)
+newtype Writer w a = 
+  Writer (a, w) 
+  deriving (Show, Eq)
 
 type IntWriterM w = Writer w Int
 
@@ -74,7 +76,7 @@ addWriter :: Monoid w => IntWriterM w -> (Int -> IntWriterM w) -> IntWriterM w
 addWriter initialWriterM transformer =
   let (initialValue, initialMonoid) = runWriter initialWriterM
       (newValue, newMonoid) = runWriter $ transformer initialValue
-  in intWriter (initialValue + newValue) (initialMonoid `mappend` newMonoid)
+  in intWriter (initialValue + newValue) (initialMonoid <> newMonoid)
 
 --
 -- Add Reader
