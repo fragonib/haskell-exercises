@@ -27,6 +27,8 @@ library
   exposed-modules:
       Elephant.Functors.Alternative
       Elephant.Functors.Tree
+      HaskellProgramming.Chapter15
+      HaskellProgramming.OutlawMonoid
       Kata.AddingWords
       Kata.Backslash
       Kata.Catalan
@@ -62,7 +64,8 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      QuickCheck
+    , base >=4.7 && <5
     , containers
     , extra
     , mtl
@@ -76,7 +79,8 @@ executable exercises-exe
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      QuickCheck
+    , base >=4.7 && <5
     , containers
     , exercises
     , extra
@@ -87,6 +91,8 @@ test-suite exercises-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      HaskellProgramming.Chapter15Spec
+      HaskellProgramming.OutlawMonoidSpec
       Kata.BackslashSpec
       Kata.FizzBuzzSpec
       Kata.FourThoughtSpec

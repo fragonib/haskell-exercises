@@ -24,6 +24,7 @@ dependencies:
 - containers
 - extra
 - mtl
+- QuickCheck
 
 library:
   source-dirs: src
@@ -50,4 +51,3 @@ tests:
     dependencies:
     - exercises
     - hspec
-    - QuickCheck
