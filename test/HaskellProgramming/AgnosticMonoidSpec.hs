@@ -2,7 +2,7 @@ module HaskellProgramming.AgnosticMonoidSpec where
 
 import Test.Hspec
 import Test.QuickCheck
-import Control.Exception (evaluate)
+import Control.Exception ()
 import HaskellProgramming.Monoid (Opcional (Nada), Opcional (Valor), monoidAssociativity, monoidLeftIdentity, monoidRightIdentity)
 import HaskellProgramming.AgnosticMonoid
 

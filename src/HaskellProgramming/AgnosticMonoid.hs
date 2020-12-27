@@ -1,5 +1,3 @@
-{-# LANGUAGE ScopedTypeVariables #-}
-
 module HaskellProgramming.AgnosticMonoid where
 
 import Test.QuickCheck
@@ -22,7 +20,7 @@ instance Monoid (OrLikeMonoid a) where
   mempty = OrLikeMonoid Nada
 
 instance Arbitrary a => Arbitrary (OrLikeMonoid a) where
-  arbitrary = frequency [ (1, return $ OrLikeMonoid Nada) , (1, arbitraryOrLikeWithValor) ]
-
-arbitraryOrLikeWithValor :: Arbitrary a => Gen (OrLikeMonoid a)
-arbitraryOrLikeWithValor = OrLikeMonoid . Valor <$> arbitrary  
+  arbitrary = frequency [ 
+        (1, return $ OrLikeMonoid Nada) 
+      , (1, OrLikeMonoid . Valor <$> arbitrary) 
+    ]
