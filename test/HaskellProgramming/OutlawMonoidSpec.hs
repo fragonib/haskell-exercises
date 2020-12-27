@@ -4,15 +4,15 @@ import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
 import HaskellProgramming.OutlawMonoid
-import HaskellProgramming.Chapter15 (monoidAssociativity, monoidLeftIdentity, monoidRightIdentity)
+import HaskellProgramming.Monoid (monoidAssociativity, monoidLeftIdentity, monoidRightIdentity)
 
 spec :: Spec
 spec = do
 
-  describe "outlaw monoid" $ do
+  describe "Agnostic monoid" $ do
 
     it "Associativity" $ do
-      quickCheck (monoidAssociativity :: BullMappend) 
+      quickCheck (monoidAssociativity :: Bull -> Bull -> Bull -> Bool) 
       
     it "Identity" $ do
       quickCheck (monoidLeftIdentity :: Bull -> Bool) 

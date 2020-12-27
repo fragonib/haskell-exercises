@@ -1,7 +1,9 @@
-module HaskellProgramming.Chapter15 where
+module HaskellProgramming.Monoid where
 
 import Data.Monoid
 
+
+-- Laws
 
 associativity :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
 associativity (<>) a b c =
@@ -11,31 +13,33 @@ monoidAssociativity :: (Eq m, Monoid m) => m -> m -> m -> Bool
 monoidAssociativity a b c =
   (a <> (b <> c)) == ((a <> b) <> c)
 
-monoidLeftIdentity :: (Eq m, Monoid m) => m -> Bool 
-monoidLeftIdentity a = (mempty <> a) == a
+monoidLeftIdentity :: (Eq m, Monoid m) => m -> Bool
+monoidLeftIdentity x = (mempty <> x) == x
 
-monoidRightIdentity :: (Eq m, Monoid m) => m -> Bool 
-monoidRightIdentity a = (a <> mempty) == a
+monoidRightIdentity :: (Eq m, Monoid m) => m -> Bool
+monoidRightIdentity x = (x <> mempty) == x
 
 
+-- Example that requires Monoid on wrapped value
 
-data Optional a =
+data Opcional a =
     Nada
-  | Only a
+  | Valor a
   deriving (Eq, Show)
 
-
-instance Semigroup a => Semigroup (Optional a) where
+instance Semigroup a => Semigroup (Opcional a) where
   (<>) Nada Nada = Nada
-  (<>) Nada (Only x) = Only x
-  (<>) (Only x) Nada = Only x
-  (<>) (Only x) (Only y) = Only (x <> y)
+  (<>) Nada (Valor x) = Valor x
+  (<>) (Valor x) Nada = Valor x
+  (<>) (Valor x) (Valor y) = Valor (x <> y)
 
-instance Monoid a => Monoid (Optional a) where
+instance Monoid a => Monoid (Opcional a) where
   mempty = Nada
+  mappend = (<>)
 
 
 
+--
 
 type Verb = String
 type Adjective = String

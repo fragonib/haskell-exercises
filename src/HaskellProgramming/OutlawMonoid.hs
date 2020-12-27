@@ -5,13 +5,13 @@ import Data.Monoid
 import Test.QuickCheck
 import Test.QuickCheck.Arbitrary
 
+
+-- This is Type that is BAD Monoid instance, It doesn't enforce Monoid laws
+
 data Bull =
       Fools
     | Twoo
   deriving (Eq, Show)
-
-instance Arbitrary Bull where
-  arbitrary = frequency [ (1, return Fools) , (1, return Twoo) ]
 
 instance Semigroup Bull where
   _ <> _ = Fools
@@ -19,4 +19,5 @@ instance Semigroup Bull where
 instance Monoid Bull where
   mempty = Fools
 
-type BullMappend = Bull -> Bull -> Bull -> Bool
+instance Arbitrary Bull where
+  arbitrary = frequency [ (1, return Fools) , (1, return Twoo) ]
