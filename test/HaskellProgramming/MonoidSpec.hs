@@ -4,6 +4,7 @@ import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
 import HaskellProgramming.Monoid
+import HaskellProgramming.SemiGroup (semigroupAssociativity)
 import Data.Monoid 
 
 spec :: Spec
@@ -12,7 +13,7 @@ spec = do
   describe "Monoid laws for String Monoid" $ do
 
     it "check associativity" $ do
-      quickCheck (monoidAssociativity :: String -> String -> String -> Bool)
+      quickCheck (semigroupAssociativity :: String -> String -> String -> Bool)
       -- verboseCheck (monoidAssociativity :: String -> String -> String -> Bool)
 
     it "check identity" $ do

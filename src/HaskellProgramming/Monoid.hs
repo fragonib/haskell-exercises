@@ -3,15 +3,7 @@ module HaskellProgramming.Monoid where
 import Data.Monoid
 
 
--- Laws
-
-associativity :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
-associativity (<>) a b c =
-  a <> (b <> c) == (a <> b) <> c
-
-monoidAssociativity :: (Eq m, Monoid m) => m -> m -> m -> Bool
-monoidAssociativity a b c =
-  (a <> (b <> c)) == ((a <> b) <> c)
+-- Laws (from SemiGroup laws)
 
 monoidLeftIdentity :: (Eq m, Monoid m) => m -> Bool
 monoidLeftIdentity x = (mempty <> x) == x

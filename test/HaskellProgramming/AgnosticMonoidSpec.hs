@@ -3,7 +3,8 @@ module HaskellProgramming.AgnosticMonoidSpec where
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception ()
-import HaskellProgramming.Monoid (Opcional (Nada), Opcional (Valor), monoidAssociativity, monoidLeftIdentity, monoidRightIdentity)
+import HaskellProgramming.SemiGroup (semigroupAssociativity)
+import HaskellProgramming.Monoid (Opcional (Nada), Opcional (Valor), monoidLeftIdentity, monoidRightIdentity)
 import HaskellProgramming.AgnosticMonoid
 
 
@@ -13,7 +14,7 @@ spec = do
   describe "Monoid laws for Agnotic Monoid" $ do
 
     it "check associativity" $ do
-      quickCheck (monoidAssociativity :: OrLikeMonoid String -> OrLikeMonoid String -> OrLikeMonoid String -> Bool)
+      quickCheck (semigroupAssociativity :: OrLikeMonoid String -> OrLikeMonoid String -> OrLikeMonoid String -> Bool)
 
     it "check identity" $ do
       quickCheck (monoidLeftIdentity :: OrLikeMonoid String -> Bool)
