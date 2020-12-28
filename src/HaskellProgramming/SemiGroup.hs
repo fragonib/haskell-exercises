@@ -41,8 +41,8 @@ instance Arbitrary a => Arbitrary (Identity a) where
 data Two a b = Two a b
   deriving (Eq, Show)
 
-instance Semigroup (Two a b) where
-  Two a b <> _ = Two a b
+instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
+  Two x y <> Two x' y' = Two (x <> x') (y <> y')
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
   arbitrary = uncurry Two <$> ((,) <$> arbitrary <*> arbitrary)

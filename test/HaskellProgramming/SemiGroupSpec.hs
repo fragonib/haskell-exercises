@@ -10,7 +10,7 @@ import Data.Monoid
 spec :: Spec
 spec = do
 
-  describe "behaviour" $ do
+  describe "Behaviour" $ do
     
     it "BoolConj" $ do
       BoolConj True <> BoolConj True `shouldBe` BoolConj True
@@ -54,8 +54,12 @@ spec = do
           g = Compose $ \n -> n - 1
        in unCompose (g <> f) 1 `shouldBe` 1
   
-  describe "law verificaction" $ do
-
+  describe "Laws verificaction" $ do
+  
+    it "String" $ do
+      quickCheck (semigroupAssociativity :: String -> String -> String -> Bool)
+      -- verboseCheck (monoidAssociativity :: String -> String -> String -> Bool)
+  
     it "Trivial" $ do
       quickCheck (semigroupAssociativity :: Trivial -> Trivial -> Trivial -> Bool)
 
@@ -63,7 +67,7 @@ spec = do
       quickCheck (semigroupAssociativity :: Identity Int -> Identity Int -> Identity Int -> Bool)
 
     it "Two" $ do
-      quickCheck (semigroupAssociativity :: Two Int Int -> Two Int Int -> Two Int Int -> Bool)
+      quickCheck (semigroupAssociativity :: Two (Sum Int) (Sum Int) -> Two (Sum Int) (Sum Int) -> Two (Sum Int) (Sum Int) -> Bool)
 
     it "Three" $ do
       quickCheck (semigroupAssociativity :: Three Int Int Int -> Three Int Int Int -> Three Int Int Int -> Bool)
