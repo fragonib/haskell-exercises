@@ -4,7 +4,7 @@ import Test.QuickCheck
 import HaskellProgramming.Monoid
 
 
--- This is Type that is Monoid instance, that doesn't require wrapped value to be a Monoid
+-- Type that IS a Monoid instance, but doesn't require wrapped value to be a Monoid
 
 newtype OrLikeMonoid a =
   OrLikeMonoid { getAgnostic :: Opcional a }
