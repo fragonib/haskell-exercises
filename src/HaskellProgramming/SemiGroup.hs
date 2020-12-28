@@ -1,6 +1,7 @@
 module HaskellProgramming.SemiGroup where
 
 import Test.QuickCheck
+import Kata.Utils
 
 --
 -- Laws
@@ -59,9 +60,6 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) wher
   arbitrary = uncurry3 Three <$>
     ((,,) <$> arbitrary <*> arbitrary <*> arbitrary)
 
-uncurry3 :: (a -> b -> c -> d) -> ((a, b, c) -> d)
-uncurry3 f (a, b, c) = f a b c
-
 -- Four
 
 data Four a b c d = Four a b c d
@@ -73,9 +71,6 @@ instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d) => Semigroup (Four
 instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four a b c d) where
   arbitrary = uncurry4 Four <$>
     ((,,,) <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary)
-
-uncurry4 :: (a -> b -> c -> d -> e) -> ((a, b, c, d) -> e)
-uncurry4 f (a, b, c, d) = f a b c d
 
 -- BoolConj
 
