@@ -6,6 +6,13 @@ import Control.Exception ()
 import HaskellProgramming.SemiGroup
 import Data.Monoid
 
+-- Shortcuts 
+
+type IdentitySumInt = Identity (Sum Int)
+type TwoSumInt = Two (Sum Int) (Sum Int)
+type ThreeSumInt = Three (Sum Int) (Sum Int) (Sum Int)
+type FourSumInt = Four (Sum Int) (Sum Int) (Sum Int) (Sum Int)
+
 
 spec :: Spec
 spec = do
@@ -64,16 +71,16 @@ spec = do
       quickCheck (semigroupAssociativity :: Trivial -> Trivial -> Trivial -> Bool)
 
     it "Identity" $ do
-      quickCheck (semigroupAssociativity :: Identity Int -> Identity Int -> Identity Int -> Bool)
+      quickCheck (semigroupAssociativity :: IdentitySumInt -> IdentitySumInt -> IdentitySumInt -> Bool)
 
     it "Two" $ do
-      quickCheck (semigroupAssociativity :: Two (Sum Int) (Sum Int) -> Two (Sum Int) (Sum Int) -> Two (Sum Int) (Sum Int) -> Bool)
+      quickCheck (semigroupAssociativity :: TwoSumInt -> TwoSumInt -> TwoSumInt -> Bool)
 
     it "Three" $ do
-      quickCheck (semigroupAssociativity :: Three Int Int Int -> Three Int Int Int -> Three Int Int Int -> Bool)
+      quickCheck (semigroupAssociativity :: ThreeSumInt -> ThreeSumInt -> ThreeSumInt -> Bool)
 
     it "Four" $ do
-      quickCheck (semigroupAssociativity :: Four Int Int Int Int -> Four Int Int Int Int -> Four Int Int Int Int -> Bool)
+      quickCheck (semigroupAssociativity :: FourSumInt -> FourSumInt -> FourSumInt -> Bool)
 
     it "BoolConj" $ do
       quickCheck (semigroupAssociativity :: BoolConj -> BoolConj -> BoolConj -> Bool)

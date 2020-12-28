@@ -1,9 +1,12 @@
 module HaskellProgramming.Monoid where
 
-import Data.Monoid
+import Data.Monoid ()
+import HaskellProgramming.SemiGroup
 
 
+--
 -- Laws (from SemiGroup laws)
+--
 
 monoidLeftIdentity :: (Eq m, Monoid m) => m -> Bool
 monoidLeftIdentity x = (mempty <> x) == x
@@ -12,7 +15,11 @@ monoidRightIdentity :: (Eq m, Monoid m) => m -> Bool
 monoidRightIdentity x = (x <> mempty) == x
 
 
--- Example that requires Monoid on wrapped value
+--
+-- Examples
+--
+
+-- Opcional (that requires SemiGroup / Monoid on wrapped value)
 
 data Opcional a =
     Nada
@@ -30,21 +37,32 @@ instance Monoid a => Monoid (Opcional a) where
   mappend = (<>)
 
 
+-- Trivial
 
---
+instance Monoid Trivial where
+  mempty = Trivial
+  mappend = (<>)
+  
+-- Identity
 
-type Verb = String
-type Adjective = String
-type Adverb = String
-type Noun = String
-type Exclamation = String
+instance Monoid a => Monoid (Identity a) where
+  mempty = Identity mempty
+  mappend = (<>)
 
-madlibbin' :: Exclamation -> Adverb -> Noun -> Adjective -> String
-madlibbin' excl adv noun adj =
-  mconcat [
-    excl, "! he said ",
-    adv, " as he jumped into his car ", 
-    noun, " and drove off with his ", 
-    adj, " wife."
-  ]
+-- Two
 
+instance (Monoid a, Monoid b) => Monoid (Two a b) where
+  mempty = Two mempty mempty
+  mappend = (<>)
+  
+-- Three
+
+instance (Monoid a, Monoid b, Monoid c) => Monoid (Three a b c) where
+  mempty = Three mempty mempty mempty
+  mappend = (<>)
+  
+-- Four
+
+instance (Monoid a, Monoid b, Monoid c, Monoid d) => Monoid (Four a b c d) where
+  mempty = Four mempty mempty mempty mempty
+  mappend = (<>)

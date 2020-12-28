@@ -30,8 +30,8 @@ instance Arbitrary Trivial where
 newtype Identity a = Identity a
   deriving (Eq, Show)
 
-instance Semigroup (Identity a) where
-  Identity x <> Identity _ = Identity x
+instance Semigroup a => Semigroup (Identity a) where
+  Identity x <> Identity y = Identity (x <> y)
 
 instance Arbitrary a => Arbitrary (Identity a) where
   arbitrary = Identity <$> arbitrary
@@ -52,8 +52,8 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
 data Three a b c = Three a b c
   deriving (Eq, Show)
 
-instance Semigroup (Three a b c) where
-  Three a b c <> _ = Three a b c
+instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (Three a b c) where
+  Three a b c <> Three a' b' c' = Three (a <> a') (b <> b') (c <> c')
 
 instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where
   arbitrary = uncurry3 Three <$>
@@ -67,8 +67,8 @@ uncurry3 f (a, b, c) = f a b c
 data Four a b c d = Four a b c d
   deriving (Eq, Show)
 
-instance Semigroup (Four a b c d) where
-  Four a b c d <> _ = Four a b c d
+instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d) => Semigroup (Four a b c d) where
+  Four a b c d <> Four a' b' c' d' = Four (a <> a') (b <> b') (c <> c') (d <> d')
 
 instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four a b c d) where
   arbitrary = uncurry4 Four <$>
