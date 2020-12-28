@@ -19,6 +19,13 @@ spec = do
 
   describe "Behaviour" $ do
     
+    it "Opcional monoid" $ do
+      Valor (Sum 1) <> Valor (Sum 1) `shouldBe` Valor (Sum 2)
+      Valor (Product 4) <> Valor (Product 2) `shouldBe` Valor (Product 8)
+      Valor (Sum 1) <> Nada `shouldBe` Valor (Sum 1)
+      Valor [1] <> Nada `shouldBe` Valor [1]
+      Nada <> Valor (Sum 1) `shouldBe` Valor (Sum 1)
+    
     it "BoolConj" $ do
       BoolConj True <> BoolConj True `shouldBe` BoolConj True
       BoolConj True <> BoolConj False `shouldBe` BoolConj False
@@ -64,32 +71,32 @@ spec = do
   describe "Laws verificaction" $ do
   
     it "String" $ do
-      quickCheck (semigroupAssociativity :: String -> String -> String -> Bool)
+      property (semigroupAssociativity :: String -> String -> String -> Bool)
       -- verboseCheck (monoidAssociativity :: String -> String -> String -> Bool)
   
     it "Trivial" $ do
-      quickCheck (semigroupAssociativity :: Trivial -> Trivial -> Trivial -> Bool)
+      property (semigroupAssociativity :: Trivial -> Trivial -> Trivial -> Bool)
 
     it "Identity" $ do
-      quickCheck (semigroupAssociativity :: IdentitySumInt -> IdentitySumInt -> IdentitySumInt -> Bool)
+      property (semigroupAssociativity :: IdentitySumInt -> IdentitySumInt -> IdentitySumInt -> Bool)
 
     it "Two" $ do
-      quickCheck (semigroupAssociativity :: TwoSumInt -> TwoSumInt -> TwoSumInt -> Bool)
+      property (semigroupAssociativity :: TwoSumInt -> TwoSumInt -> TwoSumInt -> Bool)
 
     it "Three" $ do
-      quickCheck (semigroupAssociativity :: ThreeSumInt -> ThreeSumInt -> ThreeSumInt -> Bool)
+      property (semigroupAssociativity :: ThreeSumInt -> ThreeSumInt -> ThreeSumInt -> Bool)
 
     it "Four" $ do
-      quickCheck (semigroupAssociativity :: FourSumInt -> FourSumInt -> FourSumInt -> Bool)
+      property (semigroupAssociativity :: FourSumInt -> FourSumInt -> FourSumInt -> Bool)
 
     it "BoolConj" $ do
-      quickCheck (semigroupAssociativity :: BoolConj -> BoolConj -> BoolConj -> Bool)
+      property (semigroupAssociativity :: BoolConj -> BoolConj -> BoolConj -> Bool)
 
     it "BoolDisj" $ do
-      quickCheck (semigroupAssociativity :: BoolDisj -> BoolDisj -> BoolDisj -> Bool)
+      property (semigroupAssociativity :: BoolDisj -> BoolDisj -> BoolDisj -> Bool)
 
     it "Special 'Or'" $ do
-      quickCheck (semigroupAssociativity :: Or Int Int -> Or Int Int -> Or Int Int -> Bool)
+      property (semigroupAssociativity :: Or Int Int -> Or Int Int -> Or Int Int -> Bool)
 
     it "Compose" $ do
       True `shouldBe` True
@@ -98,11 +105,11 @@ spec = do
       True `shouldBe` True
 
     it "Validation" $ do
-      quickCheck (semigroupAssociativity :: Validation String Int -> Validation String Int -> Validation String Int -> Bool)
+      property (semigroupAssociativity :: Validation String Int -> Validation String Int -> Validation String Int -> Bool)
 
     it "AccumulateRight" $ do
-      quickCheck (semigroupAssociativity :: AccumulateRight String (Sum Int) -> AccumulateRight String (Sum Int) -> AccumulateRight String (Sum Int) -> Bool)
+      property (semigroupAssociativity :: AccumulateRight String (Sum Int) -> AccumulateRight String (Sum Int) -> AccumulateRight String (Sum Int) -> Bool)
 
     it "AccumulateBoth" $ do
-      quickCheck (semigroupAssociativity :: AccumulateBoth String (Sum Int) -> AccumulateBoth String (Sum Int) -> AccumulateBoth String (Sum Int) -> Bool)
+      property (semigroupAssociativity :: AccumulateBoth String (Sum Int) -> AccumulateBoth String (Sum Int) -> AccumulateBoth String (Sum Int) -> Bool)
 

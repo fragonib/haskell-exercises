@@ -17,15 +17,6 @@ type FourSumInt = Four (Sum Int) (Sum Int) (Sum Int) (Sum Int)
 spec :: Spec
 spec = do
 
-  describe "Behaviour" $ do
-
-    it "Opcional monoid" $ do
-      Valor (Sum 1) `mappend` Valor (Sum 1) `shouldBe` Valor (Sum 2)
-      Valor (Product 4) `mappend` Valor (Product 2) `shouldBe` Valor (Product 8)
-      Valor (Sum 1) `mappend` Nada `shouldBe` Valor (Sum 1)
-      Valor [1] `mappend` Nada `shouldBe` Valor [1]
-      Nada `mappend` Valor (Sum 1) `shouldBe` Valor (Sum 1)
-
   describe "Laws verification" $ do
     
     it "String" $ do
@@ -52,18 +43,18 @@ spec = do
       quickCheck (monoidLeftIdentity :: FourSumInt -> Bool)
       quickCheck (monoidRightIdentity :: FourSumInt -> Bool)
 
---    it "BoolConj" $ do
---      quickCheck (monoidLeftIdentity :: BoolConj -> Bool)
---      quickCheck (monoidRightIdentity :: BoolConj -> Bool)
---
---    it "BoolDisj" $ do
---      quickCheck (monoidLeftIdentity :: BoolDisj -> Bool)
---      quickCheck (monoidRightIdentity :: BoolDisj -> Bool)
---
---    it "Special 'Or'" $ do
---      quickCheck (monoidLeftIdentity :: Or Int Int -> Bool)
---      quickCheck (monoidRightIdentity :: Or Int Int -> Bool)
---
+    it "BoolConj" $ do
+      quickCheck (monoidLeftIdentity :: BoolConj -> Bool)
+      quickCheck (monoidRightIdentity :: BoolConj -> Bool)
+
+    it "BoolDisj" $ do
+      quickCheck (monoidLeftIdentity :: BoolDisj -> Bool)
+      quickCheck (monoidRightIdentity :: BoolDisj -> Bool)
+
+    it "Special 'Or'" $ do
+      quickCheck (monoidLeftIdentity :: Or (Sum Int) (Sum Int) -> Bool)
+      quickCheck (monoidRightIdentity :: Or (Sum Int) (Sum Int) -> Bool)
+
 --    it "Compose" $ do
 --      True `shouldBe` True
 --    

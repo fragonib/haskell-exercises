@@ -1,7 +1,8 @@
 module HaskellProgramming.AgnosticMonoid where
 
 import Test.QuickCheck
-import HaskellProgramming.Monoid
+import HaskellProgramming.Monoid ()
+import HaskellProgramming.SemiGroup (Opcional(..))
 
 
 -- Type that IS a Monoid instance, but doesn't require wrapped value to be a Monoid

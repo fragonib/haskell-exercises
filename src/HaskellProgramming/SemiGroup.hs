@@ -15,6 +15,19 @@ semigroupAssociativity a b c =
 -- Examples:
 --
 
+-- Opcional (requires SemiGroup wrapped value)
+
+data Opcional a =
+    Nada
+  | Valor a
+  deriving (Eq, Show)
+
+instance Semigroup a => Semigroup (Opcional a) where
+  Nada <> Nada = Nada
+  Nada <> (Valor x) = Valor x
+  (Valor x) <> Nada = Valor x
+  (Valor x) <> (Valor y) = Valor (x <> y)
+
 -- Trivial
 
 data Trivial = Trivial
@@ -72,7 +85,7 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four
   arbitrary = uncurry4 Four <$>
     ((,,,) <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary)
 
--- BoolConj
+-- BoolConj (and)
 
 newtype BoolConj = BoolConj Bool
   deriving (Eq, Show)
@@ -86,9 +99,9 @@ instance Semigroup BoolConj where
 instance Arbitrary BoolConj where
   arbitrary = BoolConj <$> arbitrary
 
--- BoolDisj
+-- BoolDisj (or)
 
-newtype  BoolDisj = BoolDisj Bool
+newtype BoolDisj = BoolDisj Bool
   deriving (Eq, Show)
 
 instance Semigroup BoolDisj where
@@ -122,7 +135,7 @@ newtype Combine a b = Combine { unCombine :: a -> b }
 instance (Semigroup b) => Semigroup (Combine a b) where
   Combine f <> Combine g = Combine $ \x -> f x <> g x
 
--- Comp
+-- Compose
 
 newtype Compose a = Compose { unCompose :: a -> a }
 

@@ -2,19 +2,22 @@ module HaskellProgramming.OutlawMonoidSpec where
 
 import Test.Hspec
 import Test.QuickCheck
-import Control.Exception (evaluate)
-import HaskellProgramming.OutlawMonoid
+import Control.Exception ()
 import HaskellProgramming.SemiGroup (semigroupAssociativity)
 import HaskellProgramming.Monoid (monoidLeftIdentity, monoidRightIdentity)
+import HaskellProgramming.OutlawMonoid
+
 
 spec :: Spec
 spec = do
 
-  describe "Agnostic monoid" $ do
+  describe "Outlaw Monoid" $ do
 
     it "Associativity" $ do
-      quickCheck (semigroupAssociativity :: Bull -> Bull -> Bull -> Bool)
+      property (semigroupAssociativity :: OutlawMonoid -> OutlawMonoid -> OutlawMonoid -> Bool)
       
-    it "Identity" $ do
-      quickCheck (monoidLeftIdentity :: Bull -> Bool) 
-      quickCheck (monoidRightIdentity :: Bull -> Bool)
+    it "Left Identity (violated)" $ do
+      property (monoidLeftIdentity :: OutlawMonoid -> Bool)
+    
+    it "Rigth Identity (violated)" $ do
+      property (monoidRightIdentity :: OutlawMonoid -> Bool)
