@@ -2,6 +2,7 @@ module HaskellProgramming.Monoid where
 
 import Data.Monoid ()
 import HaskellProgramming.SemiGroup
+import Test.QuickCheck.Arbitrary (arbitrary)
 
 
 --
@@ -63,3 +64,23 @@ instance Monoid BoolDisj where
 
 instance (Monoid a) => Monoid (Or a b) where
   mempty = Fst mempty
+  
+-- Validation
+
+instance (Monoid a, Monoid b) => Monoid (Validation a b) where
+  mempty = Value mempty
+  
+-- AccumulateRight
+
+instance (Monoid b) => Monoid (AccumulateRight a b) where
+  mempty = AccumulateRight $ Value mempty
+  
+-- AccumulateBoth
+
+instance (Monoid a, Monoid b) => Monoid (AccumulateBoth a b) where
+  mempty = AccumulateBoth $ Value mempty
+  
+-- Mem
+
+instance (Monoid s, Monoid a) => Monoid (Mem s a) where
+  mempty = Mem $ const (mempty, mempty)

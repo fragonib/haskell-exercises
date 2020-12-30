@@ -67,6 +67,7 @@ spec = do
       let f = Compose $ \n -> n + 1 :: Int
           g = Compose $ \n -> n - 1
        in unCompose (g <> f) 1 `shouldBe` 1
+       
   
   describe "Laws verificaction" $ do
   

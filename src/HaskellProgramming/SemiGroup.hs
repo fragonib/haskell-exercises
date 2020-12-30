@@ -186,3 +186,14 @@ instance (Semigroup a, Semigroup b) => Semigroup (AccumulateBoth a b) where
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (AccumulateBoth a b) where
   arbitrary = AccumulateBoth <$> arbitrary
+  
+  
+-- Mem
+
+newtype Mem s a = Mem { runMem :: s -> (a, s) }
+
+instance (Semigroup s, Semigroup a) => Semigroup (Mem s a) where
+  Mem f <> Mem g = Mem $ \x ->
+    let r = f x
+        r' = g x
+    in (fst r <> fst r', snd r <> snd r')
