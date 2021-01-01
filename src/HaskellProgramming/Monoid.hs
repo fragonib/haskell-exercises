@@ -1,3 +1,5 @@
+{-# LANGUAGE TupleSections #-}
+
 module HaskellProgramming.Monoid where
 
 import Data.Monoid ()
@@ -82,5 +84,5 @@ instance (Monoid a, Monoid b) => Monoid (AccumulateBoth a b) where
   
 -- Mem
 
-instance (Monoid s, Monoid a) => Monoid (Mem s a) where
-  mempty = Mem $ const (mempty, mempty)
+instance (Monoid a) => Monoid (Mem s a) where
+  mempty = Mem (mempty,)

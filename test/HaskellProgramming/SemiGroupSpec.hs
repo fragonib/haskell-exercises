@@ -101,9 +101,10 @@ spec = do
 
     it "Compose" $ do
       True `shouldBe` True
-    
+
     it "Combine" $ do
       True `shouldBe` True
+      -- property (semigroupAssociativity :: Combine Int (Sum Int) -> Combine Int (Sum Int) -> Combine Int (Sum Int) -> Bool)
 
     it "Validation" $ do
       property (semigroupAssociativity :: Validation String Int -> Validation String Int -> Validation String Int -> Bool)
@@ -114,3 +115,5 @@ spec = do
     it "AccumulateBoth" $ do
       property (semigroupAssociativity :: AccumulateBoth String (Sum Int) -> AccumulateBoth String (Sum Int) -> AccumulateBoth String (Sum Int) -> Bool)
 
+    it "Mem" $ 
+      True `shouldBe` True

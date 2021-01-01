@@ -15,7 +15,7 @@ semigroupAssociativity a b c =
 -- Examples:
 --
 
--- Opcional (requires SemiGroup wrapped value)
+-- Opcional (requires SemiGroup on wrapped value)
 
 data Opcional a =
     Nada
@@ -130,10 +130,25 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
 
 -- Combine
 
-newtype Combine a b = Combine { unCombine :: a -> b }
+newtype Combine a b = Combine { unCombine :: a -> b }  
+  
+--instance (Arbitrary a, Eq b) => Eq (Combine a b) where
+--  c == c' = unCombine c == unCombine c' 
+--  
+--instance (Eq a, Eq b) => Eq (a -> b) where
+--  f == g = $ do
+--     x <- (arbitrary :: Gen a)
+--     y <- (arbitrary :: Gen b)
+--     return $ f x == g y 
+--  
+--instance Show (Combine a b) where
+--  show = const "->"
 
 instance (Semigroup b) => Semigroup (Combine a b) where
   Combine f <> Combine g = Combine $ \x -> f x <> g x
+  
+instance (CoArbitrary a, Arbitrary b) => Arbitrary (Combine a b) where
+  arbitrary = Combine <$> arbitrary
 
 -- Compose
 
@@ -187,13 +202,21 @@ instance (Semigroup a, Semigroup b) => Semigroup (AccumulateBoth a b) where
 instance (Arbitrary a, Arbitrary b) => Arbitrary (AccumulateBoth a b) where
   arbitrary = AccumulateBoth <$> arbitrary
   
-  
 -- Mem
 
 newtype Mem s a = Mem { runMem :: s -> (a, s) }
 
-instance (Semigroup s, Semigroup a) => Semigroup (Mem s a) where
+instance (Semigroup a) => Semigroup (Mem s a) where
   Mem f <> Mem g = Mem $ \x ->
     let r = f x
-        r' = g x
-    in (fst r <> fst r', snd r <> snd r')
+        r' = g (snd r)
+    in (fst r <> fst r', snd r')
+    
+--instance (CoArbitrary s, Arbitrary a) => Arbitrary (Mem s a) where
+--  arbitrary = Mem <$> arbitrary
+--  
+--instance (CoArbitrary s, Arbitrary a) => Arbitrary (s -> (a, s)) where
+--  arbitrary = do 
+--    f <- (arbitrary :: Gen (s -> s))
+--    y <- (arbitrary :: Gen a)
+--    return (\s' -> (y, f s'))

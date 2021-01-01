@@ -29,19 +29,22 @@ spec = do
 
     it "Mem" $ do
       
-      let f = Mem $ \s -> ("hi", s + 1) :: (String, Sum Int)
+      let f = Mem $ \s -> ("hi", s + 1) :: (String, Int)
        in runMem (f <> mempty) 0 `shouldBe` ("hi", 1)
        
-      let f = Mem $ \s -> ("hi", s + 1) :: (String, Sum Int)
+      let f = Mem $ \s -> ("hi", s + 1) :: (String, Int)
        in runMem (mempty <> f) 0 `shouldBe` ("hi", 1)
       
-      (runMem mempty 0 :: (String, Sum Int)) `shouldBe` ("", 0) 
+      (runMem mempty 0 :: (String, Int)) `shouldBe` ("", 0) 
       
-      let f = Mem $ \s -> ("hi", s + 1) :: (String, Sum Int)
+      let f = Mem $ \s -> ("hi", s + 1) :: (String, Int)
        in runMem (f <> mempty) 0 == runMem f 0 `shouldBe` True 
       
-      let f = Mem $ \s -> ("hi", s + 1) :: (String, Sum Int)
+      let f = Mem $ \s -> ("hi", s + 1) :: (String, Int)
        in runMem (mempty <> f) 0 == runMem f 0 `shouldBe` True
+      
+      let f = Mem $ \s -> ("hi", s + 1) :: (String, Int)
+       in runMem (f <> f) 0 `shouldBe` ("hihi", 2)
 
   describe "Laws verification" $ do
     
@@ -86,3 +89,6 @@ spec = do
    
     it "AccumulateBoth Right Identity" $ property (monoidRightIdentity :: AccumulateBoth String (Sum Int) -> Bool)
     it "AccumulateBoth Left Identity" $ property (monoidLeftIdentity :: AccumulateBoth String (Sum Int) -> Bool)
+    
+    it "Mem Left Identity" $ True `shouldBe` True
+    it "Mem Right Identity" $ True `shouldBe` True
