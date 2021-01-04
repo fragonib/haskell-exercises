@@ -27,10 +27,14 @@ instance Semigroup a => Semigroup (Opcional a) where
   Nada <> (Valor x) = Valor x
   (Valor x) <> Nada = Valor x
   (Valor x) <> (Valor y) = Valor (x <> y)
+  
+instance Arbitrary a => Arbitrary (Opcional a) where
+  arbitrary = frequency [ (1, Valor <$> arbitrary) , (1, return Nada) ]
 
 -- Trivial
 
-data Trivial = Trivial
+data Trivial = 
+  Trivial
   deriving (Eq, Show)
 
 instance Semigroup Trivial where
@@ -41,7 +45,8 @@ instance Arbitrary Trivial where
 
 -- Identity
 
-newtype Identity a = Identity a
+newtype Identity a = 
+  Identity a
   deriving (Eq, Show)
 
 instance Semigroup a => Semigroup (Identity a) where
@@ -52,7 +57,8 @@ instance Arbitrary a => Arbitrary (Identity a) where
 
 -- Two
 
-data Two a b = Two a b
+data Two a b = 
+  Two a b
   deriving (Eq, Show)
 
 instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
@@ -63,7 +69,8 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
 
 -- Three
 
-data Three a b c = Three a b c
+data Three a b c = 
+  Three a b c
   deriving (Eq, Show)
 
 instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (Three a b c) where
@@ -75,7 +82,8 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) wher
 
 -- Four
 
-data Four a b c d = Four a b c d
+data Four a b c d = 
+  Four a b c d
   deriving (Eq, Show)
 
 instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d) => Semigroup (Four a b c d) where
@@ -87,7 +95,8 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four
 
 -- BoolConj (and)
 
-newtype BoolConj = BoolConj Bool
+newtype BoolConj = 
+  BoolConj Bool
   deriving (Eq, Show)
 
 instance Semigroup BoolConj where
@@ -101,7 +110,8 @@ instance Arbitrary BoolConj where
 
 -- BoolDisj (or)
 
-newtype BoolDisj = BoolDisj Bool
+newtype BoolDisj = 
+  BoolDisj Bool
   deriving (Eq, Show)
 
 instance Semigroup BoolDisj where
@@ -160,7 +170,8 @@ instance Semigroup (Compose a) where
 -- Validation
 
 data Validation a b =
-  Fail a | Value b
+    Fail a 
+  | Value b
   deriving (Eq, Show)
 
 instance Semigroup a => Semigroup (Validation a b) where

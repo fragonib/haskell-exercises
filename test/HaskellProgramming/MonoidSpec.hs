@@ -9,6 +9,7 @@ import Data.Monoid
 
 -- Shortcuts 
 
+type OptionalSumInt = Opcional (Sum Int)
 type TwoSumInt = Two (Sum Int) (Sum Int)
 type ThreeSumInt = Three (Sum Int) (Sum Int) (Sum Int)
 type FourSumInt = Four (Sum Int) (Sum Int) (Sum Int) (Sum Int)
@@ -50,6 +51,9 @@ spec = do
     
     it "String Left Identity" $ property (monoidLeftIdentity :: String -> Bool)
     it "String Right Identity" $ property (monoidRightIdentity :: String -> Bool)
+    
+    it "Opcional Left Identity" $ property (monoidLeftIdentity :: OptionalSumInt -> Bool)
+    it "Opcional Right Identity" $ property (monoidRightIdentity :: OptionalSumInt -> Bool)
    
     it "Trivial Left Identity" $ property (monoidLeftIdentity :: Trivial -> Bool)
     it "Trivial Right Identity" $ property (monoidRightIdentity :: Trivial -> Bool)

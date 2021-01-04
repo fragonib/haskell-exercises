@@ -8,11 +8,13 @@ import Data.Monoid
 
 -- Shortcuts 
 
+type OptionalSumInt = Opcional (Sum Int)
 type IdentitySumInt = Identity (Sum Int)
 type TwoSumInt = Two (Sum Int) (Sum Int)
 type ThreeSumInt = Three (Sum Int) (Sum Int) (Sum Int)
 type FourSumInt = Four (Sum Int) (Sum Int) (Sum Int) (Sum Int)
 
+-- Specs
 
 spec :: Spec
 spec = do
@@ -74,7 +76,10 @@ spec = do
     it "String" $ do
       property (semigroupAssociativity :: String -> String -> String -> Bool)
       -- verboseCheck (monoidAssociativity :: String -> String -> String -> Bool)
-  
+
+    it "Opcional" $ do
+      property (semigroupAssociativity :: OptionalSumInt -> OptionalSumInt -> OptionalSumInt -> Bool)
+
     it "Trivial" $ do
       property (semigroupAssociativity :: Trivial -> Trivial -> Trivial -> Bool)
 
