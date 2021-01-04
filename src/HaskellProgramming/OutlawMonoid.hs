@@ -5,7 +5,7 @@ import Test.QuickCheck
 import Test.QuickCheck.Arbitrary ()
 
 
--- This is Type that is BAD Monoid instance, It doesn't enforce Monoid laws
+-- Type that is BAD Monoid instance, it doesn't enforce Monoid laws
 
 data OutlawMonoid =
   A | B

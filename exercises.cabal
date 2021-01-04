@@ -27,9 +27,9 @@ library
   exposed-modules:
       Elephant.Functors.Alternative
       Elephant.Functors.Tree
-      HaskellProgramming.AgnosticMonoid
       HaskellProgramming.Monoid
       HaskellProgramming.OutlawMonoid
+      HaskellProgramming.RelaxedMonoid
       HaskellProgramming.SemiGroup
       Kata.AddingWords
       Kata.Backslash
@@ -93,9 +93,9 @@ test-suite exercises-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      HaskellProgramming.AgnosticMonoidSpec
       HaskellProgramming.MonoidSpec
       HaskellProgramming.OutlawMonoidSpec
+      HaskellProgramming.RelaxedMonoidSpec
       HaskellProgramming.SemiGroupSpec
       Kata.BackslashSpec
       Kata.FizzBuzzSpec
