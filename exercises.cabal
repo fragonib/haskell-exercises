@@ -25,6 +25,7 @@ source-repository head
 
 library
   exposed-modules:
+      AdventOfCode.SlamShuffle
       Elephant.Functors.Alternative
       Elephant.Functors.Tree
       HaskellProgramming.Monoid
@@ -93,6 +94,7 @@ test-suite exercises-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      AdventOfCode.SlamShuffleSpec
       HaskellProgramming.MonoidSpec
       HaskellProgramming.OutlawMonoidSpec
       HaskellProgramming.RelaxedMonoidSpec
