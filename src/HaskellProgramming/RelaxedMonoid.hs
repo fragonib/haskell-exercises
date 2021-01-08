@@ -12,10 +12,8 @@ newtype LeftBiasedOpcionalConj a =
   deriving (Eq, Show)
 
 instance Semigroup (LeftBiasedOpcionalConj a) where
-  LeftBiasedOpcionalConj Nada <> LeftBiasedOpcionalConj Nada = LeftBiasedOpcionalConj Nada
-  LeftBiasedOpcionalConj Nada <> LeftBiasedOpcionalConj (Valor x) = LeftBiasedOpcionalConj (Valor x)
-  LeftBiasedOpcionalConj (Valor x) <> LeftBiasedOpcionalConj Nada = LeftBiasedOpcionalConj (Valor x)
-  LeftBiasedOpcionalConj (Valor x) <> LeftBiasedOpcionalConj (Valor _) = LeftBiasedOpcionalConj (Valor x)
+  LeftBiasedOpcionalConj Nada <> x = x
+  LeftBiasedOpcionalConj (Valor x) <> _ = LeftBiasedOpcionalConj (Valor x)
 
 instance Monoid (LeftBiasedOpcionalConj a) where
   mempty = LeftBiasedOpcionalConj Nada

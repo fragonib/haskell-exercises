@@ -13,6 +13,14 @@ spec = do
 
   describe "Agnostic Monoid instance" $ do
     
+    describe "Behaviour" $ do
+      
+      it "Or like and left-valued" $ do
+        LeftBiasedOpcionalConj Nada <> LeftBiasedOpcionalConj Nada `shouldBe` LeftBiasedOpcionalConj (Nada :: Opcional Int)
+        LeftBiasedOpcionalConj Nada <> LeftBiasedOpcionalConj (Valor 2) `shouldBe` LeftBiasedOpcionalConj (Valor 2 :: Opcional Int)
+        LeftBiasedOpcionalConj (Valor 1) <> LeftBiasedOpcionalConj Nada `shouldBe` LeftBiasedOpcionalConj (Valor 1 :: Opcional Int)
+        LeftBiasedOpcionalConj (Valor 1) <> LeftBiasedOpcionalConj (Valor 2) `shouldBe` LeftBiasedOpcionalConj (Valor 1 :: Opcional Int)
+
     describe "Laws" $ do
   
       it "Associativity" $ do
@@ -23,11 +31,3 @@ spec = do
   
       it "Right identity" $ do
         property (monoidRightIdentity :: LeftBiasedOpcionalConj Int -> Bool)
-  
-    describe "Behaviour" $ do
-      
-      it "Or like and left-valued" $ do
-        LeftBiasedOpcionalConj Nada <> LeftBiasedOpcionalConj Nada `shouldBe` LeftBiasedOpcionalConj (Nada :: Opcional Int)
-        LeftBiasedOpcionalConj Nada <> LeftBiasedOpcionalConj (Valor 2) `shouldBe` LeftBiasedOpcionalConj (Valor 2 :: Opcional Int)
-        LeftBiasedOpcionalConj (Valor 1) <> LeftBiasedOpcionalConj Nada `shouldBe` LeftBiasedOpcionalConj (Valor 1 :: Opcional Int)
-        LeftBiasedOpcionalConj (Valor 1) <> LeftBiasedOpcionalConj (Valor 2) `shouldBe` LeftBiasedOpcionalConj (Valor 1 :: Opcional Int)
