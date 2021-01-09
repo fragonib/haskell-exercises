@@ -2,60 +2,55 @@ module AdventOfCode.SlamShuffle where
 
 import Control.Monad.State (State)
 import qualified Kata.Utils as K
+import Data.List (elemIndex)
+import Data.Maybe (fromMaybe)
 
 type Deck = [Int]
 type EnumeratedDeck = [(Int, Int)]
 type ShuffleCommand = String
-type Size = Int
+type PileSize = Int
 
-factoryDeck :: Size -> Deck
+factoryDeck :: PileSize -> Deck
 factoryDeck n = [0 .. n - 1]
 
 -- Shuffling
 
-doShuffleCommand :: ShuffleCommand -> Deck -> Deck
-doShuffleCommand shuffleCommand =
+doShuffleCommand :: Deck -> ShuffleCommand -> Deck
+doShuffleCommand initialDeck shuffleCommand =
   case words shuffleCommand of
-     ["deal", "with", "new", "stack"] -> restackDeck
-     ["deal", "with", "increment", position] -> dealWithIncrement $ read position
-     ["cut", position] -> cutDeck $ read position
+     ["deal", "with", "new", "stack"] -> shuffleByRestacking initialDeck
+     ["deal", "with", "increment", position] -> shuffleWithIncrement (read position) initialDeck
+     ["cut", position] -> shuffleByCutting (read position) initialDeck
 
-restackDeck :: Deck -> Deck
-restackDeck = reverse
+shuffleByRestacking :: Deck -> Deck
+shuffleByRestacking = reverse
 
-cutDeck :: Int -> Deck -> Deck
-cutDeck locus deck =
+shuffleByCutting :: Int -> Deck -> Deck
+shuffleByCutting locus deck =
   pile2 ++ pile1
   where cutPosition = if locus < 0 then length deck + locus else locus
         (pile1, pile2) = splitAt cutPosition deck
 
-dealWithIncrement :: Int -> Deck -> Deck
-dealWithIncrement increment deck =
-  snd <$> dealWithIncrementEnumerated pileSize increment enumeratedDeck
-  where
-    enumeratedDeck = K.enumerate deck
-    pileSize = length deck
-
-dealWithIncrementEnumerated :: Int -> Int -> EnumeratedDeck -> EnumeratedDeck
-dealWithIncrementEnumerated pileSize increment enumeratedDeck@(x:xs) =
-    (enumeratedDeck !! index) : dealWithIncrementEnumerated pileSize increment xs
-    where
-      index = nth + (pileSize - length enumeratedDeck)
-      nth = invertPerm pileSize increment (fst x)
+shuffleWithIncrement :: Int -> Deck -> Deck
+shuffleWithIncrement increment deck =
+    map (\index -> deck !! invertPerm pileSize increment index) [0..pileSize-1]
+    where pileSize = length deck
 
 invertPerm :: Int -> Int -> Int -> Int
-invertPerm pileSize increment j
-  | j `mod` increment == 0 = j `div` increment
-  | otherwise = invertPerm pileSize increment (j+pileSize)
+invertPerm pileSize increment destinationLocus
+  | destinationLocus `mod` increment == 0 = destinationLocus `div` increment
+  | otherwise = invertPerm pileSize increment (destinationLocus + pileSize)
 
 -- IO
 
-shuffleCLI :: [String] -> String
-shuffleCLI shuffleCommands =
-  show shuffledDeck
-  where shuffledDeck = foldl (flip doShuffleCommand) (factoryDeck 10) shuffleCommands
+cardLocusAfterShuffling :: Int -> PileSize -> [ShuffleCommand] -> Int
+cardLocusAfterShuffling targetCard pileSize shuffleCommands =
+  fromMaybe 0 $ elemIndex targetCard shuffledDeck
+  where shuffledDeck = foldl doShuffleCommand (factoryDeck pileSize) shuffleCommands
 
 main :: IO()
 main = do
   inputLines <- lines <$> getContents
-  putStr $ shuffleCLI inputLines
+  let [targetCard, pileSize] = map read $ words $ head inputLines
+      shuffleCommands = tail inputLines
+   in putStrLn $ show $ cardLocusAfterShuffling targetCard pileSize shuffleCommands
