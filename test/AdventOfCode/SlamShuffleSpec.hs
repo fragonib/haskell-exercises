@@ -66,30 +66,36 @@ spec = do
     it "find card after locus 1" $ do
       -- Start: 0 1 2 3 4 5 6 7 8 9
       -- End:   0 3 6 9 2 5 8 1 4 7
-      runPerm (cardLocusAfterShufflingPerm 10 [
-          "deal with increment 7",
-          "deal into new stack",
-          "deal into new stack"
-       ]) 2 `shouldBe` 4
+      let perm = cardLocusAfterShufflingPerm 10 [
+                    "deal with increment 7",
+                    "deal into new stack",
+                    "deal into new stack"
+                 ]
+       in map (runPerm perm) [0..9] `shouldBe` [0,7,4,1,8,5,2,9,6,3]
 
     it "find card after locus 2" $ do
       -- Start: 0 1 2 3 4 5 6 7 8 9
       -- Cut 6: 6 7 8 9 0 1 2 3 4 5
+      -- Inc 7: 6 9 2 5 8 1 4 7 0 3
       -- End:   3 0 7 4 1 8 5 2 9 6
-      runPerm (cardLocusAfterShufflingPerm 10 [
-          "cut 6",
-          "deal with increment 7",
-          "deal into new stack"
-       ]) 0 `shouldBe` 1
+      let perm = cardLocusAfterShufflingPerm 10 [
+                    "cut 6",
+                    "deal with increment 7",
+                    "deal into new stack"
+                 ] 
+       in map (runPerm perm) [0..9] `shouldBe` [1,4,7,0,3,6,9,2,5,8]
 
     it "find card after locus 3" $ do
-      -- Start: 0 1 2 3 4 5 6 7 8 9
-      -- End:   6 3 0 7 4 1 8 5 2 9
-      runPerm (cardLocusAfterShufflingPerm 10 [
-          "deal with increment 7",
-          "deal with increment 9",
-          "cut -2"
-       ]) 2 `shouldBe` 8
+      -- Start:  0 1 2 3 4 5 6 7 8 9
+      -- Int 7:  0 3 6 9 2 5 8 1 4 7
+      -- Int 9:  0 7 4 1 8 5 2 9 6 3
+      -- Cut -2: 6 3 0 7 4 1 8 5 2 9
+      let perm = cardLocusAfterShufflingPerm 10 [
+                    "deal with increment 7",
+                    "deal with increment 9",
+                    "cut -2"
+                 ]
+       in map (runPerm perm) [0..9] `shouldBe` [2,5,8,1,4,7,0,3,6,9]
 
     it "find card after locus 4" $ do
       -- Start: 0 1 2 3 4 5 6 7 8 9
