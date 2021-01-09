@@ -26,6 +26,7 @@ source-repository head
 library
   exposed-modules:
       AdventOfCode.SlamShuffle
+      AdventOfCode.SlamShuffle2
       Elephant.Functors.Alternative
       Elephant.Functors.Tree
       HaskellProgramming.Monoid

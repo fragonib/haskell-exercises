@@ -43,8 +43,8 @@ shuffleWithIncrementPerm pileSize increment =
 
 -- IO
 
-cardLocusAfterShufflingPerm :: PileSize -> [ShuffleCommand] -> Permutation
-cardLocusAfterShufflingPerm pileSize =
+slamShuffle :: PileSize -> [ShuffleCommand] -> Permutation
+slamShuffle pileSize =
   mconcat . map (doShuffleCommand pileSize)
 
 main :: IO()
@@ -52,5 +52,5 @@ main = do
   inputLines <- lines <$> getContents
   let [targetCard, pileSize] = map read $ words $ head inputLines
       shuffleCommands = tail inputLines
-      combinedPerm = cardLocusAfterShufflingPerm pileSize shuffleCommands
+      combinedPerm = slamShuffle pileSize shuffleCommands
    in print $ runPerm combinedPerm targetCard

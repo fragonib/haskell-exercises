@@ -3,7 +3,7 @@ module AdventOfCode.SlamShuffleSpec where
 import Test.Hspec
 import AdventOfCode.SlamShuffle
   (shuffleByRestackingPerm, shuffleByCuttingPerm, shuffleWithIncrementPerm,
-   runPerm, cardLocusAfterShufflingPerm)
+   runPerm, slamShuffle)
 
 -- Specs
 
@@ -66,7 +66,7 @@ spec = do
     it "find card after locus 1" $ do
       -- Start: 0 1 2 3 4 5 6 7 8 9
       -- End:   0 3 6 9 2 5 8 1 4 7
-      let perm = cardLocusAfterShufflingPerm 10 [
+      let perm = slamShuffle 10 [
                     "deal with increment 7",
                     "deal into new stack",
                     "deal into new stack"
@@ -78,7 +78,7 @@ spec = do
       -- Cut 6: 6 7 8 9 0 1 2 3 4 5
       -- Inc 7: 6 9 2 5 8 1 4 7 0 3
       -- End:   3 0 7 4 1 8 5 2 9 6
-      let perm = cardLocusAfterShufflingPerm 10 [
+      let perm = slamShuffle 10 [
                     "cut 6",
                     "deal with increment 7",
                     "deal into new stack"
@@ -90,7 +90,7 @@ spec = do
       -- Int 7:  0 3 6 9 2 5 8 1 4 7
       -- Int 9:  0 7 4 1 8 5 2 9 6 3
       -- Cut -2: 6 3 0 7 4 1 8 5 2 9
-      let perm = cardLocusAfterShufflingPerm 10 [
+      let perm = slamShuffle 10 [
                     "deal with increment 7",
                     "deal with increment 9",
                     "cut -2"
@@ -100,7 +100,7 @@ spec = do
     it "find card after locus 4" $ do
       -- Start: 0 1 2 3 4 5 6 7 8 9
       -- End:   9 2 5 8 1 4 7 0 3 6
-      runPerm (cardLocusAfterShufflingPerm 10 [
+      runPerm (slamShuffle 10 [
           "deal into new stack",
           "cut -2",
           "deal with increment 7",
@@ -114,7 +114,7 @@ spec = do
        ]) 2 `shouldBe` 1
 
     it "find card after locus" $ do
-      runPerm (cardLocusAfterShufflingPerm 10007 [
+      runPerm (slamShuffle 10007 [
          "deal with increment 73",
          "cut -8387",
          "deal with increment 41"
