@@ -1,56 +1,56 @@
 module AdventOfCode.SlamShuffle where
 
-import Control.Monad.State (State)
-import qualified Kata.Utils as K
-import Data.List (elemIndex)
-import Data.Maybe (fromMaybe)
+-- Data
 
-type Deck = [Int]
-type EnumeratedDeck = [(Int, Int)]
 type ShuffleCommand = String
 type PileSize = Int
+type Increment = Int
+type CutPosition = Int
+type Locus = Int
 
-factoryDeck :: PileSize -> Deck
-factoryDeck n = [0 .. n - 1]
+newtype Permutation = Permutation { runPerm :: Locus -> Locus }
+instance Semigroup Permutation where
+  Permutation f <> Permutation g = Permutation (f . g)
+instance Monoid Permutation where
+  mempty = Permutation id
 
 -- Shuffling
 
-doShuffleCommand :: Deck -> ShuffleCommand -> Deck
-doShuffleCommand initialDeck shuffleCommand =
+doShuffleCommand :: PileSize -> ShuffleCommand -> Permutation
+doShuffleCommand pileSize shuffleCommand =
   case words shuffleCommand of
-     ["deal", "into", "new", "stack"] -> shuffleByRestacking initialDeck
-     ["deal", "with", "increment", position] -> shuffleWithIncrement (read position) initialDeck
-     ["cut", position] -> shuffleByCutting (read position) initialDeck
+     ["deal", "into", "new", "stack"] -> shuffleByRestackingPerm pileSize
+     ["cut", position] -> shuffleByCuttingPerm pileSize (read position)
+     ["deal", "with", "increment", increment] -> shuffleWithIncrementPerm pileSize (read increment)
+     _ -> error "unknown"
 
-shuffleByRestacking :: Deck -> Deck
-shuffleByRestacking = reverse
+shuffleByRestackingPerm :: PileSize -> Permutation
+shuffleByRestackingPerm pileSize =
+  Permutation (\locus -> pileSize - locus - 1)
 
-shuffleByCutting :: Int -> Deck -> Deck
-shuffleByCutting locus deck =
-  pile2 ++ pile1
-  where cutPosition = if locus < 0 then length deck + locus else locus
-        (pile1, pile2) = splitAt cutPosition deck
+shuffleByCuttingPerm :: PileSize -> CutPosition -> Permutation
+shuffleByCuttingPerm pileSize cutPosition =
+  Permutation (\locus -> if locus < positiveCutPosition
+                  then locus + (pileSize - positiveCutPosition)
+                  else locus - positiveCutPosition)
+  where positiveCutPosition = if cutPosition < 0
+                              then pileSize + cutPosition
+                              else cutPosition
 
-shuffleWithIncrement :: Int -> Deck -> Deck
-shuffleWithIncrement increment deck =
-    map (\destinationIndex -> deck !! invertPerm pileSize increment destinationIndex) [0..pileSize-1]
-    where pileSize = length deck
-
-invertPerm :: Int -> Int -> Int -> Int
-invertPerm pileSize increment destinationLocus
-  | destinationLocus `mod` increment == 0 = destinationLocus `div` increment
-  | otherwise = invertPerm pileSize increment (destinationLocus + pileSize)
+shuffleWithIncrementPerm :: PileSize -> Increment -> Permutation
+shuffleWithIncrementPerm pileSize increment =
+  Permutation (\locus -> (locus * increment) `mod` pileSize)
 
 -- IO
 
-cardLocusAfterShuffling :: Int -> PileSize -> [ShuffleCommand] -> Int
-cardLocusAfterShuffling targetCard pileSize shuffleCommands =
-  fromMaybe 0 $ elemIndex targetCard shuffledDeck
-  where shuffledDeck = foldl doShuffleCommand (factoryDeck pileSize) shuffleCommands
+cardLocusAfterShufflingPerm :: PileSize -> [ShuffleCommand] -> Permutation
+cardLocusAfterShufflingPerm pileSize =
+  mconcat . map (doShuffleCommand pileSize)
 
 main :: IO()
 main = do
   inputLines <- lines <$> getContents
   let [targetCard, pileSize] = map read $ words $ head inputLines
       shuffleCommands = tail inputLines
-   in print $ cardLocusAfterShuffling targetCard pileSize shuffleCommands
+      combinedPerm = cardLocusAfterShufflingPerm pileSize shuffleCommands
+   in print $ show $ runPerm combinedPerm targetCard
