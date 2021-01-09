@@ -18,7 +18,7 @@ factoryDeck n = [0 .. n - 1]
 doShuffleCommand :: Deck -> ShuffleCommand -> Deck
 doShuffleCommand initialDeck shuffleCommand =
   case words shuffleCommand of
-     ["deal", "with", "new", "stack"] -> shuffleByRestacking initialDeck
+     ["deal", "into", "new", "stack"] -> shuffleByRestacking initialDeck
      ["deal", "with", "increment", position] -> shuffleWithIncrement (read position) initialDeck
      ["cut", position] -> shuffleByCutting (read position) initialDeck
 
@@ -33,7 +33,7 @@ shuffleByCutting locus deck =
 
 shuffleWithIncrement :: Int -> Deck -> Deck
 shuffleWithIncrement increment deck =
-    map (\index -> deck !! invertPerm pileSize increment index) [0..pileSize-1]
+    map (\destinationIndex -> deck !! invertPerm pileSize increment destinationIndex) [0..pileSize-1]
     where pileSize = length deck
 
 invertPerm :: Int -> Int -> Int -> Int
@@ -53,4 +53,4 @@ main = do
   inputLines <- lines <$> getContents
   let [targetCard, pileSize] = map read $ words $ head inputLines
       shuffleCommands = tail inputLines
-   in putStrLn $ show $ cardLocusAfterShuffling targetCard pileSize shuffleCommands
+   in print $ cardLocusAfterShuffling targetCard pileSize shuffleCommands
