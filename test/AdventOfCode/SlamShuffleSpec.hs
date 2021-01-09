@@ -82,7 +82,7 @@ spec = do
                     "cut 6",
                     "deal with increment 7",
                     "deal into new stack"
-                 ] 
+                 ]
        in map (runPerm perm) [0..9] `shouldBe` [1,4,7,0,3,6,9,2,5,8]
 
     it "find card after locus 3" $ do

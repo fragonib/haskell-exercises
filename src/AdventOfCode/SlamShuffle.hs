@@ -10,7 +10,7 @@ type Locus = Int
 
 newtype Permutation = Permutation { runPerm :: Locus -> Locus }
 instance Semigroup Permutation where
-  Permutation f <> Permutation g = Permutation (f . g)
+  Permutation f <> Permutation g = Permutation (g . f)
 instance Monoid Permutation where
   mempty = Permutation id
 
@@ -53,4 +53,4 @@ main = do
   let [targetCard, pileSize] = map read $ words $ head inputLines
       shuffleCommands = tail inputLines
       combinedPerm = cardLocusAfterShufflingPerm pileSize shuffleCommands
-   in print $ show $ runPerm combinedPerm targetCard
+   in print $ runPerm combinedPerm targetCard
