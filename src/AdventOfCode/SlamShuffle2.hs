@@ -38,8 +38,8 @@ doShuffleCommand pileSize shuffleCommand =
      _ -> error "unknown"
 
 runPerm :: Permutation -> PileSize -> Locus -> Locus
-runPerm (Permutation a b) pileSize x =
-  (a * x + b) `mod` pileSize
+runPerm (Permutation a b) pileSize initialLocus =
+  (a * initialLocus + b) `mod` pileSize
 
 
 -- IO
@@ -53,6 +53,6 @@ main :: IO()
 main = do
   inputLines <- lines <$> getContents
   let [targetCard, pileSize, repetitions] = map read $ words $ head inputLines
-      shuffleCommands = tail inputLines
+      shuffleCommands = reverse $ tail inputLines
       combinedPerm = slamShuffle2 pileSize repetitions shuffleCommands
    in print $ runPerm combinedPerm pileSize targetCard
