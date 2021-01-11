@@ -95,6 +95,7 @@ test-suite exercises-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      AdventOfCode.SlamShuffle2Spec
       AdventOfCode.SlamShuffleSpec
       HaskellProgramming.MonoidSpec
       HaskellProgramming.OutlawMonoidSpec
