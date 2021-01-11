@@ -2,6 +2,7 @@ module AdventOfCode.SlamShuffle2Spec where
 
 import AdventOfCode.SlamShuffle2
 import Test.Hspec
+import Kata.Utils
 
 
 -- Specs
@@ -9,7 +10,7 @@ import Test.Hspec
 spec :: Spec
 spec = do
 
-  describe "Small deck" $ do
+  describe "Small deck & few shuffles" $ do
 
     it "mixing shuffles 1" $ do
       -- Start: 0 1 2 3 4 5 6 7 8 9
@@ -19,6 +20,7 @@ spec = do
                     "deal into new stack",
                     "deal into new stack"
                  ]
+--       in print finalPerm
        in map (runPerm finalPerm 10) [0..9] `shouldBe` [0,7,4,1,8,5,2,9,6,3]
 
     it "mixing shuffles 2" $ do
@@ -31,6 +33,7 @@ spec = do
                     "deal with increment 7",
                     "deal into new stack"
                  ]
+--       in print finalPerm
        in map (runPerm finalPerm 10) [0..9] `shouldBe` [1,4,7,0,3,6,9,2,5,8]
 
     it "mixing shuffles 3" $ do
@@ -43,6 +46,7 @@ spec = do
                     "deal with increment 9",
                     "cut -2"
                  ]
+--       in print finalPerm
        in map (runPerm finalPerm 10) [0..9] `shouldBe` [2,5,8,1,4,7,0,3,6,9]
 
     it "mixing shuffles 4" $ do
@@ -60,17 +64,18 @@ spec = do
                     "deal with increment 3",
                     "cut -1"
                  ]
+--         in print finalPerm            
        in map (runPerm finalPerm 10) [0..9] `shouldBe` [7,4,1,8,5,2,9,6,3,0]
        
 
   describe "Huge deck" $ do
 
-    it "only one card origin" $ do
-      runPerm finalPerm hugePileSize 2020 `shouldBe` 67653184481624
+    it "origin of only one card" $ do
+       invertPerm finalPerm hugePileSize 2020 `shouldBe` 41653717360577
        where
          hugePileSize = 119315717514047
          hugeRepetitions = 101741582076661
-         finalPerm = slamShuffle2 hugePileSize hugeRepetitions shuffleSequence
+         finalPerm = slamShuffle2 hugePileSize 1 shuffleSequence
          shuffleSequence = [
             "cut 181",
             "deal with increment 61",

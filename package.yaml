@@ -25,6 +25,9 @@ dependencies:
 - extra
 - mtl
 - QuickCheck
+- groups
+- heredoc
+- finite-typelits
 
 library:
   source-dirs: src

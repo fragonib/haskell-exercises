@@ -45,5 +45,8 @@
     <orderEntry type="library" name="extra-1.7.5" level="project" />
     <orderEntry type="library" name="process-1.6.8.0" level="project" />
     <orderEntry type="library" name="mtl-2.2.2" level="project" />
+    <orderEntry type="library" name="finite-typelits-0.1.4.2" level="project" />
+    <orderEntry type="library" name="groups-0.4.1.0" level="project" />
+    <orderEntry type="library" name="heredoc-0.2.0.0" level="project" />
   </component>
 </module>

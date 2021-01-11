@@ -1,7 +1,7 @@
 module AdventOfCode.SlamShuffleSpec where
 
 import Test.Hspec
-import AdventOfCode.SlamShuffle (shuffleByRestacking, shuffleByCutting, shuffleWithIncrement, runPerm, slamShuffle)
+import AdventOfCode.SlamShuffle
 
 -- Specs
 

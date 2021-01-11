@@ -14,11 +14,14 @@ data Permutation =
     scale :: Int,
     offset :: Int
   }
+  deriving (Show)
+  
 instance Semigroup Permutation where
-  Permutation a b <> Permutation a' b' = Permutation (a' * a) (a' * b + b')
+  Permutation a b <> Permutation a' b' = 
+    Permutation (a' * a) (a' * b + b')
 
 instance Monoid Permutation where
-  mempty = Permutation 1 0
+  mempty = Permutation { scale = 1, offset = 0 }
 
 --instance Group Permutation where
 --    invert (Permutation a b) = Permutation a' b'
@@ -41,6 +44,10 @@ runPerm :: Permutation -> PileSize -> Locus -> Locus
 runPerm (Permutation a b) pileSize initialLocus =
   (a * initialLocus + b) `mod` pileSize
 
+invertPerm :: Permutation -> PileSize -> Int -> Int
+invertPerm perm@(Permutation a b) pileSize finalLocus
+    | ((finalLocus - b) `div` a) < 0 = (finalLocus - b) `div` a
+    | otherwise = invertPerm perm pileSize (finalLocus + pileSize)
 
 -- IO
 
