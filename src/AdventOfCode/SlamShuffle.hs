@@ -19,33 +19,28 @@ instance Monoid Permutation where
 doShuffleCommand :: PileSize -> ShuffleCommand -> Permutation
 doShuffleCommand pileSize shuffleCommand =
   case words shuffleCommand of
-     ["deal", "into", "new", "stack"] -> shuffleByRestackingPerm pileSize
-     ["cut", position] -> shuffleByCuttingPerm pileSize (read position)
-     ["deal", "with", "increment", increment] -> shuffleWithIncrementPerm pileSize (read increment)
+     ["deal", "into", "new", "stack"] -> shuffleByRestacking pileSize
+     ["cut", position] -> shuffleByCutting pileSize (read position)
+     ["deal", "with", "increment", increment] -> shuffleWithIncrement pileSize (read increment)
      _ -> error "unknown"
 
-shuffleByRestackingPerm :: PileSize -> Permutation
-shuffleByRestackingPerm pileSize =
-  Permutation (\locus -> pileSize - locus - 1)
+shuffleByRestacking :: PileSize -> Permutation
+shuffleByRestacking pileSize =
+  Permutation (\locus -> -1 * locus + pileSize - 1)
 
-shuffleByCuttingPerm :: PileSize -> CutPosition -> Permutation
-shuffleByCuttingPerm pileSize cutPosition =
-  Permutation (\locus -> if locus < positiveCutPosition
-                  then locus + (pileSize - positiveCutPosition)
-                  else locus - positiveCutPosition)
-  where positiveCutPosition = if cutPosition < 0
-                              then pileSize + cutPosition
-                              else cutPosition
+shuffleByCutting :: PileSize -> CutPosition -> Permutation
+shuffleByCutting pileSize cutPosition =
+  Permutation (\locus -> (1 * locus - cutPosition) `mod` pileSize)
 
-shuffleWithIncrementPerm :: PileSize -> Increment -> Permutation
-shuffleWithIncrementPerm pileSize increment =
-  Permutation (\locus -> (locus * increment) `mod` pileSize)
+shuffleWithIncrement :: PileSize -> Increment -> Permutation
+shuffleWithIncrement pileSize increment =
+  Permutation (\locus -> (increment * locus) `mod` pileSize)
 
 -- IO
 
 slamShuffle :: PileSize -> [ShuffleCommand] -> Permutation
-slamShuffle pileSize =
-  mconcat . map (doShuffleCommand pileSize)
+slamShuffle pileSize shuffleCommands =
+  mconcat $ map (doShuffleCommand pileSize) shuffleCommands
 
 main :: IO()
 main = do
