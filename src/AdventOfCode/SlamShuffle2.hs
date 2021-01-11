@@ -10,17 +10,17 @@ import Data.Group
 -- Data
 
 type ShuffleCommand = String
-type PileSize = Int
-type Repetitions = Int
-type Locus = Int
+type PileSize = Integer
+type Repetitions = Integer
+type Locus = Integer
 
 -- Solve
 
 data Permutation =
   Perm {
-    pileSize :: Int,
-    scale :: Int,
-    offset :: Int
+    pileSize :: Integer,
+    scale :: Integer,
+    offset :: Integer
   }
   deriving (Show)
 
@@ -36,8 +36,14 @@ instance Group Permutation where
   invert (Perm s a b) = Perm s' a' b'
       where
         s' = s
-        a' = a ^ (s - 2)
+        a' = modPow a (s - 2) s
         b' = negate (a' * b)
+
+modPow :: Integer -> Integer -> Integer -> Integer
+modPow b 0 _ = 1
+modPow b e s | even e = p * p `mod` s
+             | otherwise = b * p * p `mod` s
+               where p = modPow b (e `div` 2) s
 
 doShuffleCommand :: PileSize -> ShuffleCommand -> Permutation
 doShuffleCommand ps shuffleCommand =
