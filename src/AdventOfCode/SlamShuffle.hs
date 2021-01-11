@@ -9,8 +9,10 @@ type CutPosition = Int
 type Locus = Int
 
 newtype Permutation = Permutation { runPerm :: Locus -> Locus }
+
 instance Semigroup Permutation where
-  Permutation f <> Permutation g = Permutation (g . f)
+  Permutation f <> Permutation g = Permutation (f . g)
+
 instance Monoid Permutation where
   mempty = Permutation id
 
@@ -46,6 +48,6 @@ main :: IO()
 main = do
   inputLines <- lines <$> getContents
   let [targetCard, pileSize] = map read $ words $ head inputLines
-      shuffleCommands = tail inputLines
+      shuffleCommands = reverse $ tail inputLines
       combinedPerm = slamShuffle pileSize shuffleCommands
    in print $ runPerm combinedPerm targetCard
