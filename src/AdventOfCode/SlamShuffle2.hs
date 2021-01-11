@@ -1,5 +1,3 @@
-{-# LANGUAGE ScopedTypeVariables #-}
-
 module AdventOfCode.SlamShuffle2 where
 
 import Data.Semigroup (stimes)

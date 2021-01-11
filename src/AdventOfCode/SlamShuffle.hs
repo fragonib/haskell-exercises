@@ -24,7 +24,7 @@ doShuffleCommand pileSize shuffleCommand =
      ["deal", "into", "new", "stack"] -> shuffleByRestacking pileSize
      ["cut", position] -> shuffleByCutting pileSize (read position)
      ["deal", "with", "increment", increment] -> shuffleWithIncrement pileSize (read increment)
-     _ -> error "unknown"
+     _ -> error "Unknown command"
 
 shuffleByRestacking :: PileSize -> Permutation
 shuffleByRestacking pileSize =
