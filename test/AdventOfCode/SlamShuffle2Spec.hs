@@ -64,7 +64,7 @@ spec = do
                     "deal with increment 3",
                     "cut -1"
                  ]
---         in print finalPerm            
+--         in print finalPerm
        in map (runPerm finalPerm 10) [0..9] `shouldBe` [7,4,1,8,5,2,9,6,3,0]
        
 
@@ -73,9 +73,9 @@ spec = do
     it "origin of only one card" $ do
        invertPerm finalPerm hugePileSize 2020 `shouldBe` 41653717360577
        where
+         finalPerm = slamShuffle2 hugePileSize hugeRepetitions shuffleSequence
          hugePileSize = 119315717514047
          hugeRepetitions = 101741582076661
-         finalPerm = slamShuffle2 hugePileSize 1 shuffleSequence
          shuffleSequence = [
             "cut 181",
             "deal with increment 61",

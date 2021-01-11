@@ -44,7 +44,7 @@ runPerm :: Permutation -> PileSize -> Locus -> Locus
 runPerm (Permutation a b) pileSize initialLocus =
   (a * initialLocus + b) `mod` pileSize
 
-invertPerm :: Permutation -> PileSize -> Int -> Int
+invertPerm :: Permutation -> PileSize -> Locus -> Locus
 invertPerm perm@(Permutation a b) pileSize finalLocus
     | ((finalLocus - b) `div` a) < 0 = (finalLocus - b) `div` a
     | otherwise = invertPerm perm pileSize (finalLocus + pileSize)
