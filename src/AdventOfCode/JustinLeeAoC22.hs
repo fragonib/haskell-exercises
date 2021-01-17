@@ -5,7 +5,7 @@
 {-# LANGUAGE QuasiQuotes         #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications    #-}
-module AdventOfCode.JustinLeeAoC where
+module AdventOfCode.JustinLeeAoC22 where
 
 import           Data.Finite
 import           Text.Heredoc

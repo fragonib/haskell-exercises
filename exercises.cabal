@@ -25,7 +25,7 @@ source-repository head
 
 library
   exposed-modules:
-      AdventOfCode.JustinLeeAoC
+      AdventOfCode.JustinLeeAoC22
       AdventOfCode.RocketEquation
       AdventOfCode.SlamShuffle
       AdventOfCode.SlamShuffle2
