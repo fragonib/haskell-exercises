@@ -31,6 +31,8 @@ library
       AdventOfCode.SlamShuffle2
       Elephant.Functors.Alternative
       Elephant.Functors.Tree
+      HaskellProgramming.Applicative
+      HaskellProgramming.Functor
       HaskellProgramming.Monoid
       HaskellProgramming.OutlawMonoid
       HaskellProgramming.RelaxedMonoid
@@ -41,6 +43,7 @@ library
       Kata.FizzBuzz
       Kata.FourThought
       Kata.Game2048
+      Kata.MarblesTree
       Kata.Monads
       Kata.MusicalNotation
       Kata.MyState
