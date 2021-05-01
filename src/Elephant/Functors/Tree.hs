@@ -35,5 +35,5 @@ main = do
          print $ level 3 t
          print $ level 3 (fmap (*2) t)
          print $ take 10 $ lefts t
-         putStr $ unlines $ take 10 $ lefts $ fmap (flip replicate '*') t  
+         putStr $ unlines $ take 10 $ lefts $ fmap (flip replicate '*') t
         -- print $ insert Empty (fmap (flip insert Empty) t)
